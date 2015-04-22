@@ -11,8 +11,14 @@ object Application extends Controller {
   }
 
   def listNaggers = Action {
-    val naggerJson = Naggers.toString
-    Ok(naggerJson)
+    Ok(views.html.naggers(Naggers.all))
+  }
+
+  def addNagger = Action { request =>
+    val name = request.body.asFormUrlEncoded.get.get("name").get.head
+    val phone = request.body.asFormUrlEncoded.get.get("phone").get.head
+    Naggers.add(Nagger(name, phone))
+    Ok("Nagger added")
   }
 
 

@@ -1,0 +1,20 @@
+@(naggers: Set[model.Nagger])
+
+@main("Overview of naggers") {
+
+<h1>Naggers</h1>
+
+<ul>
+    @for(nagger <- naggers) {
+        <li>@nagger.name, reach me at @nagger.phone</li>
+    }
+</ul>
+
+<strong>Add a nagger</strong>
+<form action="naggers/add" method="POST">
+    <input type="text" placeholder="Name" name="name"/>
+    <input type="text" placeholder="Phone" name="phone"/>
+    <input type="submit"/>
+</form>
+
+}

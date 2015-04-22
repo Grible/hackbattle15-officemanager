@@ -9,6 +9,7 @@ GET     /dropbox/auth-finish        controllers.DropboxTest.authFinish(code: Str
 
 GET     /naggers                    controllers.Application.listNaggers
 POST    /naggers/add                controllers.Application.addNagger
+POST    /naggers/:id                controllers.Application.updateNagger(id: Int)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

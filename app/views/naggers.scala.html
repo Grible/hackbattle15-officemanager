@@ -6,15 +6,19 @@
 
 <ul>
     @for(nagger <- naggers) {
-        <li>@nagger.name, reach me at @nagger.phone</li>
+    <form action="naggers/@nagger.id" method="POST">
+        <input type="text" value="@nagger.name" name="name"/>
+        <input type="text" value="@nagger.phone" name="phone"/>
+        <input type="submit" value="update"/>
+    </form>
     }
+    <li>
+        <form action="naggers/add" method="POST">
+            <input type="text" placeholder="Name" name="name"/>
+            <input type="text" placeholder="Phone" name="phone"/>
+            <input type="submit" value="add"/>
+        </form>
+    </li>
 </ul>
-
-<strong>Add a nagger</strong>
-<form action="naggers/add" method="POST">
-    <input type="text" placeholder="Name" name="name"/>
-    <input type="text" placeholder="Phone" name="phone"/>
-    <input type="submit"/>
-</form>
 
 }

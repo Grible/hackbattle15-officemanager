@@ -20,6 +20,8 @@ bin/
 .DS_Store
 stats.yaml
 trace.yaml
+.sbtserver/
+project/.sbtserver
 
 results/
 results-trace/

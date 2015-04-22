@@ -13,5 +13,6 @@ libraryDependencies ++= Seq(
   ws
 )
 
+herokuAppName in Compile := "naggy"
 
 fork in run := true

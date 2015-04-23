@@ -5,10 +5,10 @@
 # Home page
 GET     /                           controllers.Application.index
 
-GET     /naggers                    controllers.NaggerController.listNaggers
-POST    /naggers/add                controllers.NaggerController.addNagger
-POST    /naggers/:id                controllers.NaggerController.updateNagger(id: Int)
-POST    /naggers/:id/delete         controllers.NaggerController.deleteNagger(id: Int)
+GET     /crew                    controllers.CrewController.showCrew
+POST    /crew/add                controllers.CrewController.addPerson
+POST    /crew/:id                controllers.CrewController.updatePerson(id: Int)
+POST    /crew/:id/delete         controllers.CrewController.deletePerson(id: Int)
 
 GET     /tasks                   	controllers.TaskController.listTasks
 POST    /tasks/add               	controllers.TaskController.addTask

@@ -1,6 +1,6 @@
 package controllers
 
-import controllers.NaggerController._
+import controllers.CrewController._
 import controllers.TaskController.Tasks
 import model.Allocation
 import play.api.mvc._
@@ -25,7 +25,7 @@ object AllocationController extends Controller {
       })
     }
 
-    val selectRandomPerson = () => Random.shuffle(Naggers.all).head
+    val selectRandomPerson = () => Random.shuffle(Crew.persons).head
 
     override def toString = all.mkString("\n")
 

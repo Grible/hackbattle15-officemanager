@@ -15,6 +15,8 @@ POST    /tasks/add               	controllers.TaskController.addTask
 POST    /tasks/:id               	controllers.TaskController.updateTask(id: Int)
 POST    /tasks/:id/delete        	controllers.TaskController.deleteTask(id: Int)
 
+GET		/allocate					controllers.AllocationController.allocate
+
 GET     /dropbox                    controllers.DropboxTest.index
 GET     /dropbox/auth-finish        controllers.DropboxTest.authFinish(code: String ?="", state: String ?="")
 

@@ -35,8 +35,8 @@ object TaskController extends Controller {
   object Tasks {
     var all: Set[Task] = Set()
 
-    add(Task("Do the dishes"))
-    add(Task("Vacuum cleaning"))
+    add(Task("doing the dishes"))
+    add(Task("vacuum cleaning"))
 
     def add(task: Task) = all = all + task
     def get(id:Int) = all.find(_.id == id).get

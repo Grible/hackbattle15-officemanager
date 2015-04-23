@@ -11,8 +11,8 @@ object Global extends GlobalSettings with ScaldiSupport {
 
 
 class SmsModule extends Module {
-  bind[SMSSender] when inProdMode to new NexmoSMSSender
-  bind[SMSSender] when (inDevMode or inTestMode) to new DummySMSSender
+  bind[Notifier] when inProdMode to new NexmoNotifier
+  bind[Notifier] when (inDevMode or inTestMode) to new ConsoleNotifier
 }
 
 class TaskModule extends Module {

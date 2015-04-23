@@ -13,7 +13,7 @@ import scala.util.Random
  */
 class TaskAllocatorImpl(implicit inj: Injector) extends TaskAllocator {
   val logger = Logger("TaskAllocator")
-  val smsSender = inject[SMSSender]
+  val notifier = inject[Notifier]
   val crewDAO = inject[CrewDAO]
 
   var allocations: Set[Allocation] = Set()
@@ -32,9 +32,10 @@ class TaskAllocatorImpl(implicit inj: Injector) extends TaskAllocator {
     val username: String = allocation.person.name
     val mobilenumber: String = allocation.person.phone
     val message = s"Hi $username! You have a task: $taskName!"
+    val person = allocation.person
 
     logger.info(taskName + " " + username + " " + mobilenumber)
-    smsSender.sendSms(mobilenumber, message)
+    notifier.sendSms(person, message)
     logger.info("\nallocation for task:\t" + taskName + "\nto user:\t\t" + username + "\nSms Notification send!\n")
   }
 }

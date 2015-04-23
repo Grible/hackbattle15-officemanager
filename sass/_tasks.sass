@@ -1,0 +1,86 @@
+.banner
+
+	.new-task-btn
+		width: 50px
+		height: 50px
+		background-color: $purple
+		display: block
+		position: absolute
+		bottom: -25px
+		left: 50%
+		margin: 0 0 0 -25px
+		border-radius: 50%
+		font-size: 25px
+		line-height: 50px
+		color: #fff
+		transition: font-size 200ms ease, background-color 200ms ease
+		+box-shadow(0px, 1px, 2px, #133442)
+		&:hover
+			font-size: 30px !important
+			background-color: #643FA5 !important
+
+ul.task-list
+	list-style-type: none
+	margin: 80px 0
+
+	li.task
+		overflow: hidden
+		margin-bottom: 40px
+		height: 50px
+
+		header
+			+gridle(7)
+			border-left: 5px solid $blue
+			height: inherit
+			padding-left: 40px
+			.title
+				margin: 0 0 4px 0
+				font-weight: 600
+				font-size: 1.25em
+
+			ul.days-indicator
+				list-style-type: none
+				margin: 0
+				padding: 0
+				font-size: 0.875em
+				color: #545454
+				li
+					display: inline
+					&.active
+						color: $purple
+						font-weight: 600
+					&:not(:last-of-type):after
+						content: " - "
+
+		aside
+			+gridle(5)
+			font-size: 0.875em
+			color: #545454
+			height: inherit
+			padding: 0
+			margin: 0
+			line-height: 50px
+
+			> *
+				vertical-align: middle
+
+			img
+				margin: 0 15px
+				max-width: 44px
+				border-radius: 50%
+				+box-shadow(0px, 1px, 2px, #133442)
+
+			span
+				width: 145px
+				display: inline-block
+				text-align: right
+
+			.change-btn
+				background-image: url("../images/edit-btn.png")
+				background-repeat: no-repeat
+				width: 26px
+				height: 26px
+				display: inline-flex
+				position: relative
+				padding: 0
+				margin: 0

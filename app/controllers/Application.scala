@@ -2,7 +2,6 @@ package controllers
 
 import model.Nagger
 import play.api.mvc._
-import play.libs.Json
 
 object Application extends Controller {
 

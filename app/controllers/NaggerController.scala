@@ -38,8 +38,9 @@ object NaggerController extends Controller {
   object Naggers {
     var all: Set[Nagger] = Set()
 
-    add(Nagger("Gino", "0612345678"))
-    add(Nagger("Leon", ""))
+    add(Nagger("Gino", "31638533628"))
+    add(Nagger("Steven", "31624434821"))
+    add(Nagger("Arthur", "31611734558"))
 
     def add(nagger: Nagger) = all = all + nagger
     def get(id:Int) = all.find(_.id == id).get

@@ -15,6 +15,7 @@ object TaskController extends Controller {
   def addTask = Action { request =>
     val name = request.body.asFormUrlEncoded.get.get("description").get.head
     Tasks.add(Task(name))
+
     Redirect(listTasksRoute)
   }
 

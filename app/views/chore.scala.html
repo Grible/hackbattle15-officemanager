@@ -6,45 +6,27 @@
 	<a href="/" class="logo">Naggy</a>
 	<h1>Startup Foundation</h1>
 	<p>There are <span>18 people</span> in this community</p>
-	<a href="#" class="new-task-btn entypo-plus"></a>
+	<a href="#" class="save-task-btn">Save your nag</a>
 </div>
 
 <div class="container">
-	<ul class="task-list">
-		<li class="task">
-			<header>
-				<p class="title">Put all the dishes in the dishwasher</p>
-				<ul class="days-indicator">
-					<li>Monday</li>
-					<li>Wednesday</li>
-					<li class="active">Friday</li>
-				</ul>
-			</header>
-			<aside><span>next up on Friday</span><img src="/assets/images/avatar-frank.jpg" class="user-avatar"><a href="#" class="change-btn"></a></aside>
-		</li>
-		<li class="task">
-			<header>
-				<p class="title">Water the plants</p>
-				<ul class="days-indicator">
-					<li>Monday</li>
-					<li class="active">Wednesday</li>
-					<li>Friday</li>
-				</ul>
-			</header>
-			<aside><span>next up on Wednesday</span><img src="/assets/images/avatar-leon.jpeg" class="user-avatar"><a href="#" class="change-btn"></a></aside>
-		</li>
-		<li class="task">
-			<header>
-				<p class="title">Empty the trash bin</p>
-				<ul class="days-indicator">
-					<li class="active">Monday</li>
-					<li>Wednesday</li>
-					<li>Friday</li>
-				</ul>
-			</header>
-			<aside><span>next up on Monday</span><img src="/assets/images/avatar-kevin.jpeg" class="user-avatar"><a href="#" class="change-btn"></a></aside>
-		</li>
-	</ul>
+	<form action="/chores/add" method="POST">
+		<div class="input-box">
+			<h3>Define your task</h3>
+			<input class="description" type="text" name="description" placeholder="Describe your task">
+		</div>
+		<div class="input-box">
+			<h3>When do you want this task to be performed</h3>
+			<ul>
+				<li><label><input type="checkbox" name="day-0" checked >Monday</label></li>
+				<li><label><input type="checkbox" name="day-1" checked >Tuesday</label></li>
+				<li><label><input type="checkbox" name="day-2" checked >Wednesday</label></li>
+				<li><label><input type="checkbox" name="day-3" checked >Thursday</label></li>
+				<li><label><input type="checkbox" name="day-4" checked >Friday</label></li>
+			</ul>
+		</div>
+		<button type="button" style="display:none">Submit</button>
+	</form>
 </div>
 
 

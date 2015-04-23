@@ -36,16 +36,16 @@ object AllocationController extends Controller {
     def allocateTasksToPersons = {
 
       shuffle
-      println ("shuffled!")
+
       for (allocation <- all) {
         val taskName: String =  URLEncoder.encode(allocation.task.name, "UTF-8")
         val username: String =  URLEncoder.encode(allocation.person.name, "UTF-8")
         val mobilenumber: String = URLEncoder.encode(allocation.person.phone, "UTF-8")
 
-
+         val message = s"Hallo $username! Je hebt een taak: $taskName!"
 
         println( taskName + " " + username + " " + mobilenumber)
-        SMSSender.sendSms(mobilenumber, "Je hebt een taak!")
+        SMSSender.sendSms(mobilenumber, message)
 
         println("\nallocation for task:\t" + taskName + "\nto user:\t\t" + username + "\nSms Notification send!\n")
       }

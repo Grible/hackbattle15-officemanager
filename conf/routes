@@ -4,10 +4,16 @@
 
 # Home page
 GET     /                           controllers.Application.index
+
 GET     /naggers                    controllers.Nagger.listNaggers
 POST    /naggers/add                controllers.Nagger.addNagger
 POST    /naggers/:id                controllers.Nagger.updateNagger(id: Int)
 POST    /naggers/:id/delete         controllers.Nagger.deleteNagger(id: Int)
+
+GET     /dropbox                    controllers.DropboxTest.index
+GET     /dropbox/auth-finish        controllers.DropboxTest.authFinish(code: String ?="", state: String ?="")
+
+GET     /chores/add                 controllers.Chore.add
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

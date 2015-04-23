@@ -1,0 +1,22 @@
+/* ==========================================================================
+ * Mixins
+ * ==========================================================================
+ */
+
+=border-radius($radius)
+	-webkit-border-radius: $radius
+	-moz-border-radius: $radius
+	-ms-border-radius: $radius
+	border-radius: $radius
+
+=box-shadow($horizontal: 0px, $vertical: 1px, $blur: 2px, $color: #cccccc)
+	-webkit-box-shadow: $horizontal $vertical $blur $color
+	-moz-box-shadow: $horizontal $vertical $blur $color
+	box-shadow: $horizontal $vertical $blur $color
+
+=vertical-align
+	position: relative
+	top: 50%
+	-webkit-transform: translateY(-50%)
+	-ms-transform: translateY(-50%)
+	transform: translateY(-50%)

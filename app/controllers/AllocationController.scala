@@ -2,7 +2,8 @@ package controllers
 
 import java.net.URLEncoder
 
-import controllers.NaggerController._
+
+import controllers.CrewController._
 import controllers.TaskController.Tasks
 import model.Allocation
 import play.api.mvc._
@@ -35,11 +36,15 @@ object AllocationController extends Controller {
     def allocateTasksToPersons = {
 
       shuffle
+      println ("shuffled!")
       for (allocation <- all) {
         val taskName: String =  URLEncoder.encode(allocation.task.name, "UTF-8")
-        val username: String =  URLEncoder.encode(allocation.nagger.name, "UTF-8")
-        val mobilenumber: String = URLEncoder.encode(allocation.nagger.phone, "UTF-8")
+        val username: String =  URLEncoder.encode(allocation.person.name, "UTF-8")
+        val mobilenumber: String = URLEncoder.encode(allocation.person.phone, "UTF-8")
 
+
+
+        println( taskName + " " + username + " " + mobilenumber)
         SMSSender.sendSms(mobilenumber, "Je hebt een taak!")
 
         println("\nallocation for task:\t" + taskName + "\nto user:\t\t" + username + "\nSms Notification send!\n")
@@ -48,7 +53,7 @@ object AllocationController extends Controller {
 
     }
 
-    val selectRandomPerson = () => Random.shuffle(Naggers.all).head
+    val selectRandomPerson = () => Random.shuffle(Crew.persons).head
 
     override def toString = all.mkString("\n")
 

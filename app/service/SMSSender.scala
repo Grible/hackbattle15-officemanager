@@ -1,5 +1,7 @@
 package service
 
+import java.net.URLEncoder
+
 import play.Play
 
 /**
@@ -14,7 +16,7 @@ object SMSSender {
 
   def sendSms(mobileNumber: String, text: String): String = {
 
-    val url = apiurl.toString + "api_key=" + apikey + "&api_secret=" + apisecret + "&from=" + sender +"&to="+ mobileNumber + "&text=" + text
+    val url = apiurl.toString + "api_key=" + apikey + "&api_secret=" + apisecret + "&from=" + sender +"&to="+ mobileNumber + "&text=" + URLEncoder.encode(text, "UTF-8")
     println("send sms: " + url)
     scala.io.Source.fromURL(url).mkString
   }

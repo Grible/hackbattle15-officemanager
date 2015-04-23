@@ -37,8 +37,9 @@ object CrewController extends Controller {
   object Crew {
     var persons: Set[Person] = Set()
 
-    add(Person("Gino", "0612345678"))
-    add(Person("Leon", ""))
+    add(Person("Gino", "31612345678"))
+    add(Person("Arthur", "31611734558"))
+    add(Person("Steven", "31624434821"))
 
     def add(person: Person) = persons = persons + person
 

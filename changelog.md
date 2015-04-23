@@ -1,5 +1,10 @@
 ## Version history
 
+### v0.2.0
+- hooked up task allocations to task overview page
+- fixed gitignore for front-end dependencies
+- added avatars to task overview
+
 ### v0.1.1
 - added missing sms sender file
 

@@ -24,11 +24,9 @@ object TaskAllocator {
 
     val taskName: String = allocation.task.name
     val username: String = allocation.person.name
-    val mobilenumber: String = allocation.person.phone
     val message = s"Hi $username! You have a task: $taskName!"
+    val person = allocation.person
 
-    println(taskName + " " + username + " " + mobilenumber)
-    SMSSender.sendSms(mobilenumber, message)
-    println("\nallocation for task:\t" + taskName + "\nto user:\t\t" + username + "\nSms Notification send!\n")
+    SMSNotifier.notify(person, message)
   }
 }

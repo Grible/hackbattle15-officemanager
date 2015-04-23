@@ -27,6 +27,11 @@ object Nagger extends Controller {
     Redirect(routes.Nagger.listNaggers())
   }
 
+  def deleteNagger(id:Int) = Action {
+    Naggers.delete(id)
+    Redirect(routes.Nagger.listNaggers())
+  }
+
   object Naggers {
     var all: Set[model.Nagger] = Set()
 
@@ -35,6 +40,7 @@ object Nagger extends Controller {
 
     def add(nagger: model.Nagger) = all = all + nagger
     def get(id:Int) = all.find(_.id == id).get
+    def delete(id:Int) = all = all - get(id)
 
     override def toString = all.toString
   }

@@ -3,14 +3,14 @@
 # ~~~~
 
 # Home page
-GET     /                        controllers.TaskController.listTasks
+GET     /                        controllers.TaskController.listAllocations
 
 GET     /crew                    controllers.CrewController.showCrew
 POST    /crew/add                controllers.CrewController.addPerson
 POST    /crew/:id                controllers.CrewController.updatePerson(id: Int)
 POST    /crew/:id/delete         controllers.CrewController.deletePerson(id: Int)
 
-GET     /tasks                   	controllers.TaskController.listTasks
+GET     /tasks                   	controllers.TaskController.listAllocations
 GET     /tasks/add               	controllers.TaskController.addTask
 POST    /tasks/add               	controllers.TaskController.addTask
 POST    /tasks/:id               	controllers.TaskController.updateTask(id: Int)

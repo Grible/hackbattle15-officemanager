@@ -14,11 +14,9 @@ object TaskAllocator {
   val selectRandomPerson = () => Random.shuffle(Crew.persons).head
 
   def allocateTask(task: Task): Allocation = {
-    println("calling allocateTask")
     val alloc = Allocation(selectRandomPerson(), task)
     notifyPerson(alloc)
     allocations = allocations + alloc
-    println("allocateTask called")
     alloc
   }
 
@@ -27,7 +25,7 @@ object TaskAllocator {
     val taskName: String = allocation.task.name
     val username: String = allocation.person.name
     val mobilenumber: String = allocation.person.phone
-    val message = s"Hallo $username! Je hebt een taak: $taskName!"
+    val message = s"Hi $username! You have a task: $taskName!"
 
     println(taskName + " " + username + " " + mobilenumber)
     SMSSender.sendSms(mobilenumber, message)

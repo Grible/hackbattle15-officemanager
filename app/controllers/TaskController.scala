@@ -8,7 +8,8 @@ import service.TaskAllocator
  * Created by steven on 23/04/15.
  */
 object TaskController extends Controller {
-  val listTasksRoute = routes.TaskController.listTasks()
+  val listTasksRoute = routes.TaskController.listAllocations()
+  val allTasksDummyNeededForInit = Tasks.all
 
   def addTask = Action { request =>
     val name = request.body.asFormUrlEncoded.get.get("description").get.head
@@ -19,8 +20,8 @@ object TaskController extends Controller {
     Redirect(listTasksRoute)
   }
 
-  def listTasks = Action { request =>
-    Ok(views.html.tasks(Tasks.all))
+  def listAllocations = Action {
+    Ok(views.html.tasks(TaskAllocator.allocations))
   }
 
   def updateTask(id: Int) = Action { request =>
@@ -38,8 +39,12 @@ object TaskController extends Controller {
   object Tasks {
     var all: Set[Task] = Set()
 
-    add(Task("doing the dishes"))
-    add(Task("vacuum cleaning"))
+    private val task1: Task = Task("doing the dishes")
+    add(task1)
+    TaskAllocator.allocateTask(task1)
+    private val task2: Task = Task("vacuum cleaning")
+    TaskAllocator.allocateTask(task2)
+    add(task2)
 
     def add(task: Task) = all = all + task
 

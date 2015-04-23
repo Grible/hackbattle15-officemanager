@@ -15,5 +15,9 @@ GET     /dropbox/auth-finish        controllers.DropboxTest.authFinish(code: Str
 
 GET     /chores/add                 controllers.Chore.add
 
+GET     /sendsms                    controllers.SMSController.send
+
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
+

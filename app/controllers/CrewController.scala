@@ -17,7 +17,7 @@ object CrewController extends Controller {
   }
 
   def showCrew = Action {
-    Ok(views.html.naggers(Crew.persons))
+    Ok(views.html.crew(Crew.persons))
   }
 
   def updatePerson(id: Int) = Action { request =>

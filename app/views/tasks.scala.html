@@ -1,0 +1,26 @@
+@(tasks: Set[model.Task])
+
+@main("Overview of tasks") {
+
+<h1>Tasks</h1>
+
+<ul>
+    @for(task <- tasks) {
+    <form action="tasks/@task.id" method="POST" style="display: inline-block">
+        <input type="text" value="@task.name" name="name"/>
+        <input type="submit" value="update"/>
+    </form>
+    <form action="tasks/@task.id/delete" method="POST" style="display: inline-block">
+        <input type="submit" value="delete"/>
+    </form>
+    <br/>
+    }
+    <li>
+        <form action="tasks/add" method="POST">
+            <input type="text" placeholder="Name" name="name"/>
+            <input type="submit" value="add"/>
+        </form>
+    </li>
+</ul>
+
+}

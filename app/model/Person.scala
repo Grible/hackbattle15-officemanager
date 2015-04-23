@@ -1,20 +1,27 @@
 package model
 
-import controllers.{Assets, routes}
+import controllers.routes
 
 /**
  * Created by steven on 22/04/15.
  */
 
-class Person(_name: String, _phone: String) {
-  var avatarSrc: String = routes.Assets.at("images/favicon.png").url
+class Person(_name: String, _phone: String, _avatarSrc: String) {
   var id: Int = IDGen.get
   var name = _name
   var phone = _phone
+  var avatarSrc = _avatarSrc
 }
 
 object Person {
-  def apply(name: String, phone: String) = new Person(name, phone)
+  def apply(name: String, phone: String) = {
+    val avatarSrc: String = routes.Assets.at("images/favicon.png").url
+    new Person(name, phone, avatarSrc)
+  }
+
+  def apply(name: String, phone: String, avatarSrc: String) = {
+    new Person(name, phone, avatarSrc)
+  }
 }
 
 object IDGen {

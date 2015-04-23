@@ -1,4 +1,4 @@
-@(tasks: Set[model.Task])
+@(allocations: Set[model.Allocation])
 
 @main("Overview of tasks") {
 
@@ -13,28 +13,30 @@
 <div class="container">
 
     <ul class="task-list">
-        @for(task <- tasks) {
+        @for(allocation <- allocations) {
+            @defining(allocation.task) { task =>
 
-        <li class="task">
-                <header>
-                    <form data-task-id="@task.id" action="tasks/@task.id" method="POST" style="display: inline-block">
-                        <input class="title @task.id" type="text" value="@task.name" name="name" data-task-id="@task.id" placeholder="Describe the task"/>
-                    </form>
-                    <ul class="days-indicator">
-                        <li>Monday</li>
-                        <li>Wednesday</li>
-                        <li class="active">Friday</li>
-                    </ul>
-                </header>
-                <aside>
-                    <span>next up on Friday</span>
-                    <img src="/assets/images/avatar-frank.jpg" class="user-avatar">
-                    <a href="#" class="change-btn" data-task-id="@task.id"></a>
-                    <form action="tasks/@task.id/delete" method="POST">
-                        <a href="#" class="delete-task-btn entypo-trash"></a>
-                    </form>
-                </aside>
-        </li>
+            <li class="task">
+                    <header>
+                        <form data-task-id="@task.id" action="tasks/@task.id" method="POST" style="display: inline-block">
+                            <input class="title @task.id" type="text" value="@task.name" name="name" data-task-id="@task.id" placeholder="Describe the task"/>
+                        </form>
+                        <ul class="days-indicator">
+                            <li>Monday</li>
+                            <li>Wednesday</li>
+                            <li class="active">Thursday</li>
+                        </ul>
+                    </header>
+                    <aside>
+                        <span>next up on Thursday</span>
+                        <img src="@allocation.person.avatarSrc" class="user-avatar">
+                        <a href="#" class="change-btn" data-task-id="@task.id"></a>
+                        <form action="tasks/@task.id/delete" method="POST">
+                            <a href="#" class="delete-task-btn entypo-trash"></a>
+                        </form>
+                    </aside>
+            </li>
+            }
         }
     </ul>
 

@@ -37,9 +37,9 @@ object CrewController extends Controller {
   object Crew {
     var persons: Set[Person] = Set()
 
-    add(Person("Gino", "31612345678"))
-    add(Person("Arthur", "31611734558"))
-    add(Person("Steven", "31624434821"))
+    add(Person("Gino", "31638533628", routes.Assets.at("images/avatar-gino.png").url))
+    add(Person("Arthur", "31611734558", routes.Assets.at("images/avatar-leon.jpeg").url))
+    add(Person("Steven", "31624434821", routes.Assets.at("images/avatar-kevin.jpeg").url))
 
     def add(person: Person) = persons = persons + person
 

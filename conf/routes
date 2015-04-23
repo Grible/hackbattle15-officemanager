@@ -3,26 +3,23 @@
 # ~~~~
 
 # Home page
-GET     /                        controllers.TaskController.listTasks
+GET     /                        controllers.TaskController.listAllocations
 
 GET     /crew                    controllers.CrewController.showCrew
 POST    /crew/add                controllers.CrewController.addPerson
 POST    /crew/:id                controllers.CrewController.updatePerson(id: Int)
 POST    /crew/:id/delete         controllers.CrewController.deletePerson(id: Int)
 
-GET     /tasks                   	controllers.TaskController.listTasks
+GET     /tasks                   	controllers.TaskController.listAllocations
 GET     /tasks/add               	controllers.TaskController.addTask
 POST    /tasks/add               	controllers.TaskController.addTask
 POST    /tasks/:id               	controllers.TaskController.updateTask(id: Int)
 POST    /tasks/:id/delete        	controllers.TaskController.deleteTask(id: Int)
 
-GET		/allocate					controllers.AllocationController.allocate
-
 GET     /dropbox                    controllers.Dropbox.index
 GET     /dropbox/test               controllers.Dropbox.uploadFileTest
 GET     /dropbox/auth-finish        controllers.Dropbox.authFinish(code: String ?="", state: String ?="")
 
-GET     /sendsms                    controllers.SMSController.send(mobilenumber : String ?="31611734558", smstext: String ?="Greetings%20from%20TNW%20Hack%20Batttle%202015")
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

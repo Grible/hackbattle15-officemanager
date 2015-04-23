@@ -1,0 +1,20 @@
+{
+  "name": "hackbattle15-officemanager",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Grible/hackbattle15-officemanager",
+  "authors": [
+    "grible"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "normalize.css": "~3.0.3",
+    "jquery": "~2.1.3"
+  }
+}

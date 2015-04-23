@@ -1,0 +1,130 @@
+/* ==========================================================================
+ * Colors
+ * ==========================================================================
+ */
+
+$purple: #421492
+$blue: #61A899
+
+
+$copperBlue: #1d2f42
+$copperBlueLight: #dbe4f2
+$copperOrange: #dd6e4b
+$textBlue: #667176
+$grey: #efefef
+$greyDark: #8f99a5
+$textBlack: #1d2f42
+
+
+/* ==========================================================================
+ * Typography
+ * ==========================================================================
+ */
+
+@import url(http://weloveiconfonts.com/api/?family=entypo)
+
+[class*="entypo-"]:before
+	font-family: 'entypo', sans-serif
+
+
+body
+	p, a, label, legend
+		font-family: 'Open Sans', sans-serif
+		font-size: 16px
+		line-height: 1.5em
+		margin: 0.75em 0 1.5em 0
+
+	h1,h2,h3,h4,h5,h6
+		font-family: 'Montserrat', sans-serif
+		font-weight: 700
+
+
+	h1
+		font-size: 2.25em
+		line-height: 1.333333em
+		margin: 0.666667em 0 0 0
+
+
+	h2
+		font-size: 1.5em
+		line-height: 1em
+		margin: 1em 0 0 0
+
+
+	h3, h4
+		font-size: 1em
+		line-height: 1.5em
+		margin: 1.5em 0 0 0
+
+	a
+		text-decoration: none !important
+
+
+/* ==========================================================================
+ * Common elements
+ * ==========================================================================
+ */
+
+input:focus, select:focus, textarea:focus, button:focus
+	outline: none
+
+
+
+.btn
+	display: inline-block
+	background-color: $copperOrange
+	height: 35px
+	line-height: 35px
+	padding: 0 15px
+	color: #fff !important
+	font-size: 14px
+	+border-radius(3px)
+	+box-shadow(0px 1px 3px #ccc)
+	transition: box-shadow 200ms ease
+	&:hover
+		box-shadow: 0px 1px 3px #959090 !important
+
+.banner
+	position: relative
+	background-color: #4E8888
+	text-align: center
+	background-repeat: no-repeat
+	background-position: center
+	background-size: cover
+	padding: 120px 0
+	color: #fff
+	font-weight: 600
+	h1
+		color: #fff
+	span
+		color: $purple
+
+	.logo
+		position: absolute
+		top: 35px
+		left: 45px
+		color: #fff
+		text-decoration: none
+		font-size: 1.125em
+		font-family: 'Montserrat', sans-serif
+		font-weight: 400
+
+
+
+/* ==========================================================================
+ * Helpers
+ * ==========================================================================
+ */
+
+.hide
+	display: none
+
+.left
+	float: left
+
+.right
+	float: right
+
+.clear
+	clear: both
+

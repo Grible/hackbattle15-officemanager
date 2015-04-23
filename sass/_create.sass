@@ -1,0 +1,50 @@
+.banner
+	.save-task-btn
+		height: 50px
+		width: 100px
+		padding: 0 25px
+		background-color: $purple
+		display: inline-block
+		position: absolute
+		bottom: -25px
+		left: 50%
+		margin: 0 0 0 -50px
+		font-size: 0.875em
+		line-height: 50px
+		color: #FFF
+		transition: background-color 200ms ease
+		border-radius: 20px 20px
+		+box-shadow(0px, 1px, 2px, #133442)
+		&:hover
+			background-color: #643FA5 !important
+		&.hide
+			display: none
+
+form
+	margin: 80px 0
+	.input-box
+		min-height: 50px
+		border-bottom: 2px solid #CECECE
+		margin-bottom: 50px
+		padding-bottom: 25px
+		input
+			border: none
+			border-left: 5px solid $blue
+			height: 50px
+			padding-left: 40px
+			margin: 20px 0 0
+			&.description
+				font-size: 1.25em
+		ul
+			margin: 0
+			padding: 0
+			list-style-type: none
+			li
+				display: inline
+				label
+					margin-right: 20px
+					input
+						height: auto
+						margin-right: 10px
+						&:focus
+							color: yellow

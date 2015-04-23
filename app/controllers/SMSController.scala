@@ -17,8 +17,8 @@ object SMSController extends Controller {
     val apikey = Play.application().configuration().getString("nexmo.api.key")
     val apisecret = Play.application().configuration().getString("nexmo.api.secret")
     val sender = Play.application().configuration().getString("nexmo.sender")
-    val safetext=URLEncoder.encode(smstext)
-    val safenumber = URLEncoder.encode(mobilenumber)
+    val safetext=URLEncoder.encode(smstext, "UTF-8")
+    val safenumber = URLEncoder.encode(mobilenumber,  "UTF-8")
     val url = apiurl.toString + "api_key=" + apikey + "&api_secret=" + apisecret + "&from=" + sender +"&to="+ safenumber + "&text=" + safetext
 
     val result = scala.io.Source.fromURL(url).mkString

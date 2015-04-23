@@ -11,7 +11,7 @@ import org.yaml.snakeyaml.{DumperOptions, Yaml}
  */
 class Task() {
   @BeanProperty var name: String = ""
-  @BeanProperty var id: Int = IDGen.get
+  var id: Int = IDGen.get
 }
 
 object Task {

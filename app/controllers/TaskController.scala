@@ -1,10 +1,8 @@
 package controllers
 
-import controllers.Application._
 import model.Task
-import play.api.cache.Cache
 import play.api.mvc._
-import play.api.Play.current
+import service.TaskAllocator
 
 /**
  * Created by steven on 23/04/15.
@@ -14,16 +12,14 @@ object TaskController extends Controller {
 
   def addTask = Action { request =>
     val name = request.body.asFormUrlEncoded.get.get("description").get.head
-    Tasks.add(Task(name))
+    val task: Task = Task(name)
+    Tasks.add(task)
+    TaskAllocator.allocateTask(task)
 
     Redirect(listTasksRoute)
   }
 
   def listTasks = Action { request =>
-    val userId: String = request.session.get("user").get
-    val task: Task = Tasks.get(0)
-    Dropbox.upload(task, "/dishes.yaml", userId)
-
     Ok(views.html.tasks(Tasks.all))
   }
 

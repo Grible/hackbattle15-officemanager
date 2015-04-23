@@ -4489,11 +4489,20 @@ input:focus, select:focus, textarea:focus, button:focus {
 
 ul.task-list {
   list-style-type: none;
-  margin: 80px 0; }
+  margin: 80px 0;
+  padding: 0; }
   ul.task-list li.task {
     overflow: hidden;
     margin-bottom: 40px;
     height: 50px; }
+    ul.task-list li.task form {
+      margin: 0;
+      width: 100%; }
+      ul.task-list li.task form input {
+        border: none;
+        width: 100%; }
+        ul.task-list li.task form input:focus {
+          color: #421492; }
     ul.task-list li.task header {
       float: left;
       direction: ltr;
@@ -4578,6 +4587,13 @@ ul.task-list {
         content: "grid-parent-default-5"; }
       ul.task-list li.task aside > * {
         vertical-align: middle; }
+      ul.task-list li.task aside form {
+        display: inline; }
+        ul.task-list li.task aside form .delete-task-btn {
+          font-size: 20px;
+          position: relative;
+          top: 2px;
+          left: 8px; }
       ul.task-list li.task aside img {
         margin: 0 15px;
         max-width: 44px;
@@ -4613,11 +4629,14 @@ ul.task-list {
   line-height: 50px;
   color: #FFF;
   transition: background-color 200ms ease;
+  border-radius: 20px 20px;
   -webkit-box-shadow: 0px 1px 2px #133442;
   -moz-box-shadow: 0px 1px 2px #133442;
   box-shadow: 0px 1px 2px #133442; }
   .banner .save-task-btn:hover {
     background-color: #643FA5 !important; }
+  .banner .save-task-btn.hide {
+    display: none; }
 
 form {
   margin: 80px 0; }

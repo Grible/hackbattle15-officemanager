@@ -11,14 +11,13 @@ POST    /naggers/:id                controllers.NaggerController.updateNagger(id
 POST    /naggers/:id/delete         controllers.NaggerController.deleteNagger(id: Int)
 
 GET     /tasks                   	controllers.TaskController.listTasks
+GET     /tasks/add               	controllers.TaskController.addTask
 POST    /tasks/add               	controllers.TaskController.addTask
 POST    /tasks/:id               	controllers.TaskController.updateTask(id: Int)
 POST    /tasks/:id/delete        	controllers.TaskController.deleteTask(id: Int)
 
 GET     /dropbox                    controllers.DropboxTest.index
 GET     /dropbox/auth-finish        controllers.DropboxTest.authFinish(code: String ?="", state: String ?="")
-
-GET     /chores/add                 controllers.Chore.add
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

@@ -13,7 +13,7 @@ object TaskController extends Controller {
   val listTasksRoute = routes.TaskController.listTasks()
 
   def addTask = Action { request =>
-    val name = request.body.asFormUrlEncoded.get.get("name").get.head
+    val name = request.body.asFormUrlEncoded.get.get("description").get.head
     Tasks.add(Task(name))
     Redirect(listTasksRoute)
   }
@@ -40,8 +40,9 @@ object TaskController extends Controller {
 
   object Tasks {
     var all: Set[Task] = Set()
-    add(Task("Do the dishes"))
-    add(Task("Vacuum cleaning"))
+
+    add(Task("doing the dishes"))
+    add(Task("vacuum cleaning"))
 
     def add(task: Task) = all = all + task
 

@@ -22,11 +22,21 @@
 ul.task-list
 	list-style-type: none
 	margin: 80px 0
+	padding: 0
 
 	li.task
 		overflow: hidden
 		margin-bottom: 40px
 		height: 50px
+
+		form
+			margin: 0
+			width: 100%
+			input
+				border: none
+				width: 100%
+				&:focus
+					color: $purple
 
 		header
 			+gridle(7)
@@ -63,6 +73,14 @@ ul.task-list
 
 			> *
 				vertical-align: middle
+
+			form
+				display: inline
+				.delete-task-btn
+					font-size: 20px
+					position: relative
+					top: 2px
+					left: 8px
 
 			img
 				margin: 0 15px

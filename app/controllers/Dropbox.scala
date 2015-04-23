@@ -7,7 +7,7 @@ import com.dropbox.core._
 import dropbox4s.core.CoreApi
 import play.api.cache.Cache
 import play.api.libs.json.{Json, JsValue}
-import play.api.{Configuration, Play}
+import play.api.{Logger, Configuration, Play}
 import play.api.mvc._
 import play.filters.csrf._
 import scalaj.http.Http
@@ -16,8 +16,9 @@ import play.api.Play.current
 /**
  * Created by Lennart on 22/04/15.
  */
-object Dropbox extends Controller with CoreApi {
+class Dropbox extends Controller with CoreApi {
 
+  val logger = Logger("Dropbox")
   val app: play.api.Application = Play.unsafeApplication
   val conf: Configuration = app.configuration
 
@@ -36,7 +37,7 @@ object Dropbox extends Controller with CoreApi {
   def index = CSRFAddToken {
     Action { implicit req =>
       val authorizationUrl: String = webAuth.start()
-      println(s"authorization url: $authorizationUrl")
+      logger.info(s"authorization url: $authorizationUrl")
       val csrfToken = CSRF.getToken(req).get.value
       Ok(views.html.dropbox.index(appKey, redirectUri, csrfToken))
     }
@@ -55,9 +56,9 @@ object Dropbox extends Controller with CoreApi {
         val accessToken: String = (json \ "access_token").as[String]
         implicit val auth: DbxAuthFinish = new DbxAuthFinish(accessToken, "", "")
 
-        println(s"Access token: $accessToken")
-        println("Linked account: " + this.accountInfo.displayName)
-        println("Account info: " + this.accountInfo)
+        logger.info(s"Access token: $accessToken")
+        logger.info("Linked account: " + this.accountInfo.displayName)
+        logger.info("Account info: " + this.accountInfo)
 
         val userId = this.accountInfo.userId.toString
 

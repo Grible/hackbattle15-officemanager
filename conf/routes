@@ -21,7 +21,7 @@ GET     /dropbox/auth-finish        controllers.Dropbox.authFinish(code: String 
 
 GET     /chores/add                 controllers.Chore.add
 
-GET     /sendsms                    controllers.SMSController.send
+GET     /sendsms                    controllers.SMSController.send(mobilenumber : String ?="31611734558", smstext: String ?="Greetings%20from%20TNW%20Hack%20Batttle%202015")
 
 
 # Map static resources from the /public folder to the /assets URL path

@@ -1,5 +1,7 @@
 package controllers
 
+import java.net.{URLEncoder, URLDecoder}
+
 import play.Play
 import play.api.mvc._
 
@@ -8,22 +10,22 @@ import play.api.mvc._
  */
 
 object SMSController extends Controller {
-  def send = Action {
+
+  def send(mobilenumber:String, smstext:String) = Action { request =>
 
     val apiurl = Play.application().configuration().getString("nexmo.api.url")
     val apikey = Play.application().configuration().getString("nexmo.api.key")
     val apisecret = Play.application().configuration().getString("nexmo.api.secret")
     val sender = Play.application().configuration().getString("nexmo.sender")
-    val mobilenumber = "31611734558"
-    val smstext="Greetings%20from%20TNW%20Hack%20Batttle%202015"
-
-    val url = apiurl.toString + "api_key=" + apikey + "&api_secret=" + apisecret + "&from=" +sender +"&to="+ mobilenumber + "&text=" + smstext
+    val safetext=URLEncoder.encode(smstext)
+    val safenumber = URLEncoder.encode(mobilenumber)
+    val url = apiurl.toString + "api_key=" + apikey + "&api_secret=" + apisecret + "&from=" + sender +"&to="+ safenumber + "&text=" + safetext
 
     val result = scala.io.Source.fromURL(url).mkString
 
     println(result)
 
-    Ok(views.html.sms("SMS Send to "))
+    Ok(views.html.sms("SMS Send to "+ mobilenumber))
   }
 
 }

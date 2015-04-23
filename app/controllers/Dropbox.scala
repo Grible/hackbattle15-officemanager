@@ -1,8 +1,10 @@
 package controllers
 
+import java.io.ByteArrayInputStream
+import java.nio.charset.StandardCharsets
+
 import com.dropbox.core._
 import dropbox4s.core.CoreApi
-import dropbox4s.core.model.DropboxPath
 import play.api.cache.Cache
 import play.api.libs.json.{Json, JsValue}
 import play.api.{Configuration, Play}
@@ -14,7 +16,7 @@ import play.api.Play.current
 /**
  * Created by Lennart on 22/04/15.
  */
-object DropboxTest extends Controller with CoreApi {
+object Dropbox extends Controller with CoreApi {
 
   val app: play.api.Application = Play.unsafeApplication
   val conf: Configuration = app.configuration
@@ -66,6 +68,31 @@ object DropboxTest extends Controller with CoreApi {
         InternalServerError("Error finishing the oAuth process: " + response.body)
       }
 
+    }
+  }
+
+  def uploadFileTest() = {
+    Action { implicit req =>
+
+      val userIdOption = req.session.get("user")
+
+      if (userIdOption.nonEmpty) {
+        val userId = userIdOption.get
+
+        val testString = "Leon - 0612345678"
+        val inputStream = new ByteArrayInputStream(testString.getBytes(StandardCharsets.UTF_8))
+
+        val accessToken = Cache.get(userId).getOrElse("").toString
+        implicit val auth: DbxAuthFinish = new DbxAuthFinish(accessToken, "", "")
+        val client: DbxClient = this.client(accessToken)
+
+        client.uploadFile("/test.txt", DbxWriteMode.force(), inputStream.available(), inputStream)
+
+        Ok(views.html.index("Done"))
+
+      } else {
+        InternalServerError("You haven't given Naggy access to your Dropbox account yet!")
+      }
     }
   }
 

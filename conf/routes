@@ -11,6 +11,7 @@ POST    /naggers/:id                controllers.Nagger.updateNagger(id: Int)
 POST    /naggers/:id/delete         controllers.Nagger.deleteNagger(id: Int)
 
 GET     /dropbox                    controllers.DropboxTest.index
+GET     /dropbox/test               controllers.DropboxTest.uploadFileTest
 GET     /dropbox/auth-finish        controllers.DropboxTest.authFinish(code: String ?="", state: String ?="")
 
 GET     /chores/add                 controllers.Chore.add

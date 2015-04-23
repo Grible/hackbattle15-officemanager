@@ -4,7 +4,7 @@ import java.io.{InputStream, ByteArrayInputStream}
 import java.nio.charset.StandardCharsets
 import scala.beans.BeanProperty
 
-import org.yaml.snakeyaml.Yaml
+import org.yaml.snakeyaml.{DumperOptions, Yaml}
 
 /**
  * Created by steven on 22/04/15.
@@ -22,9 +22,10 @@ object Task {
   }
 
   implicit def taskToYamlInputStream(task: Task): InputStream = {
-    val yaml: Yaml = new Yaml()
+    val options = new DumperOptions()
+    options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+    val yaml: Yaml = new Yaml(options)
     val output: String = yaml.dump(task)
-    println(s"converted to $output")
     new ByteArrayInputStream(output.getBytes(StandardCharsets.UTF_8))
   }
 

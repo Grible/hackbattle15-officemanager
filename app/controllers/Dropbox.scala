@@ -1,6 +1,6 @@
 package controllers
 
-import java.io.ByteArrayInputStream
+import java.io.{InputStream, ByteArrayInputStream}
 import java.nio.charset.StandardCharsets
 
 import com.dropbox.core._
@@ -71,27 +71,27 @@ object Dropbox extends Controller with CoreApi {
     }
   }
 
+  def upload(inputStream: InputStream, uploadPath: String, userId: String) = {
+    val accessToken = Cache.get(userId).getOrElse(throw new Exception("You haven't given Naggy access to your Dropbox account yet!")).toString
+    implicit val auth: DbxAuthFinish = new DbxAuthFinish(accessToken, "", "")
+    val client: DbxClient = this.client(accessToken)
+
+    client.uploadFile(uploadPath, DbxWriteMode.force(), inputStream.available(), inputStream)
+  }
+
   def uploadFileTest() = {
     Action { implicit req =>
-
-      val userIdOption = req.session.get("user")
-
-      if (userIdOption.nonEmpty) {
-        val userId = userIdOption.get
-
+      try {
+        val userId = req.session.get("user").get
         val testString = "Leon - 0612345678"
         val inputStream = new ByteArrayInputStream(testString.getBytes(StandardCharsets.UTF_8))
-
-        val accessToken = Cache.get(userId).getOrElse("").toString
-        implicit val auth: DbxAuthFinish = new DbxAuthFinish(accessToken, "", "")
-        val client: DbxClient = this.client(accessToken)
-
-        client.uploadFile("/test.txt", DbxWriteMode.force(), inputStream.available(), inputStream)
+        val uploadPath = "/test.txt"
+        upload(inputStream, uploadPath, userId)
 
         Ok(views.html.index("Done"))
-
-      } else {
-        InternalServerError("You haven't given Naggy access to your Dropbox account yet!")
+      } catch {
+        case e: Exception =>
+          InternalServerError(e.getMessage)
       }
     }
   }

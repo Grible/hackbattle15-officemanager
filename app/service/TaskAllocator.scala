@@ -1,17 +1,23 @@
 package service
 
-import controllers.CrewController._
-import model.{Task, Allocation}
+
+import model.{Allocation, Task}
+import play.api.Logger
+import scaldi.Injectable._
+import scaldi.Injector
 
 import scala.util.Random
 
 /**
-  * Created by steven on 23/04/15.
+ * Created by steven on 23/04/15.
  */
-object TaskAllocator {
+class TaskAllocatorImpl(implicit inj: Injector) extends TaskAllocator {
+  val logger = Logger("TaskAllocator")
+  val smsSender = inject[SMSSender]
+  val crewDAO = inject[CrewDAO]
 
   var allocations: Set[Allocation] = Set()
-  val selectRandomPerson = () => Random.shuffle(Crew.persons).head
+  val selectRandomPerson = () => Random.shuffle(crewDAO.persons).head
 
   def allocateTask(task: Task): Allocation = {
     val alloc = Allocation(selectRandomPerson(), task)
@@ -27,8 +33,16 @@ object TaskAllocator {
     val mobilenumber: String = allocation.person.phone
     val message = s"Hi $username! You have a task: $taskName!"
 
-    println(taskName + " " + username + " " + mobilenumber)
-    SMSSender.sendSms(mobilenumber, message)
-    println("\nallocation for task:\t" + taskName + "\nto user:\t\t" + username + "\nSms Notification send!\n")
+    logger.info(taskName + " " + username + " " + mobilenumber)
+    smsSender.sendSms(mobilenumber, message)
+    logger.info("\nallocation for task:\t" + taskName + "\nto user:\t\t" + username + "\nSms Notification send!\n")
   }
+}
+
+trait TaskAllocator {
+  def notifyPerson(allocation: Allocation): Unit
+
+  def allocateTask(task: Task): Allocation
+
+  def allocations: Set[Allocation]
 }

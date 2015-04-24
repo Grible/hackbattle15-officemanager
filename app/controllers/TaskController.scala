@@ -6,6 +6,8 @@ import scaldi.Injectable._
 import scaldi.Injector
 import service.{TaskAllocator, TaskDAO}
 
+import scala.collection.mutable.ArrayBuffer
+
 /**
  * Created by steven on 23/04/15.
  */
@@ -17,7 +19,9 @@ class TaskController(implicit inj: Injector) extends Controller {
 
   def addTask = Action { request =>
     val name = request.body.asFormUrlEncoded.get.get("description").get.head
-    val task: Task = Task(name)
+    val schedule = request.body.asFormUrlEncoded.get.get("schedule")
+
+    val task: Task = Task(name, schedule)
     taskDAO.add(task)
     taskAllocator.allocateTask(task)
 
@@ -39,6 +43,5 @@ class TaskController(implicit inj: Injector) extends Controller {
     taskDAO.delete(id)
     Redirect(listTasksRoute)
   }
-
 
 }

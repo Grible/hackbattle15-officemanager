@@ -9,7 +9,6 @@ object Global extends GlobalSettings with ScaldiSupport {
   def applicationModule = new WebModule :: new SmsModule :: new TaskModule :: new CrewModule
 }
 
-
 class SmsModule extends Module {
   bind[Notifier] when inProdMode to new NexmoNotifier
   bind[Notifier] when (inDevMode or inTestMode) to new ConsoleNotifier

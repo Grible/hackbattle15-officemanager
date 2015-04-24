@@ -1,5 +1,7 @@
 @(allocations: Set[model.Allocation])
 
+@import model.WeekDay
+
 @main("Overview of tasks") {
 
 <div class="banner" style="background-image: url('/assets/images/banner.png')">
@@ -48,11 +50,10 @@
         <div class="input-box">
             <h3>When do you want this task to be performed</h3>
             <ul>
-                <li><label><input type="checkbox" name="day-0" checked >Monday</label></li>
-                <li><label><input type="checkbox" name="day-1" checked >Tuesday</label></li>
-                <li><label><input type="checkbox" name="day-2" checked >Wednesday</label></li>
-                <li><label><input type="checkbox" name="day-3" checked >Thursday</label></li>
-                <li><label><input type="checkbox" name="day-4" checked >Friday</label></li>
+
+                @for(day <- WeekDay.values.iterator) {
+                    <li><label><input type="checkbox" value="@day.toString()" name="schedule">@day.toString</label></li>
+                }
             </ul>
         </div>
         <button type="button" style="display:none">Submit</button>

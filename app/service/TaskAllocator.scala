@@ -1,7 +1,7 @@
 package service
 
 
-import model.{Allocation, Task}
+import model.{WeekDay, Allocation, Task}
 import play.api.Logger
 import scaldi.Injectable._
 import scaldi.Injector
@@ -31,12 +31,13 @@ class TaskAllocatorImpl(implicit inj: Injector) extends TaskAllocator {
     val taskName: String = allocation.task.name
     val username: String = allocation.person.name
     val mobilenumber: String = allocation.person.phone
-    val message = s"Hi $username! You have a task: $taskName!"
+    val schedule: List[WeekDay.ValueSet] = allocation.task.schedule
+    val message = s"Hi $username! You have a task: $taskName that has to be completed on the following days: " + schedule
     val person = allocation.person
 
     logger.info(taskName + " " + username + " " + mobilenumber)
     notifier.notify(person, message)
-    logger.info("\nallocation for task:\t" + taskName + "\nto user:\t\t" + username + "\nSms Notification send!\n")
+    logger.info("\nallocation for task:\t" + taskName + "\nto user:\t\t" + username + "\nschedule: " + schedule + "\nSms Notification send!\n")
   }
 }
 

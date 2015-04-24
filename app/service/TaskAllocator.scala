@@ -31,7 +31,7 @@ class TaskAllocatorImpl(implicit inj: Injector) extends TaskAllocator {
     val taskName: String = allocation.task.name
     val username: String = allocation.person.name
     val mobilenumber: String = allocation.person.phone
-    val schedule: List[WeekDay.ValueSet] = allocation.task.schedule
+    val schedule: Option[Seq[String]] = allocation.task.schedule
     val message = s"Hi $username! You have a task: $taskName that has to be completed on the following days: " + schedule
     val person = allocation.person
 

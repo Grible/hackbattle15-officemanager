@@ -10,10 +10,10 @@ import org.yaml.snakeyaml.{DumperOptions, Yaml}
 /**
  * Created by steven on 22/04/15.
  */
-class Task() {
-  @BeanProperty var name: String = ""
+class Task(namein: String, schedulein:Option[Seq[String]] ) {
+  @BeanProperty var name: String = namein
   var id: Int = IDGen.get
-  val schedule: List[WeekDay.ValueSet] = List(WeekDay.values)
+  var schedule: Option[Seq[String]] =  schedulein
 
 }
 
@@ -29,8 +29,9 @@ object WeekDay extends Enumeration {
 
 object Task {
   def apply(name: String, schedule: Option[Seq[String]]) = {
-    val task: Task = new Task()
+    val task: Task = new Task(name, schedule)
     task.name = name
+    task.schedule = schedule
     task
   }
 

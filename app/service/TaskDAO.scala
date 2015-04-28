@@ -14,7 +14,7 @@ class DummyTaskDAO(implicit inj: Injector) extends TaskDAO {
 
   override def all: Set[Task] = _all
 
-  private val task1: Task = Task("doing the dishes!!!", Option[Seq[String]](List()))
+  private val task1: Task = Task("do the dishes!", Option[Seq[String]](List()))
   add(task1)
   taskAllocator.allocateTask(task1)
   private val task2: Task = Task("vacuum cleaning", Option[Seq[String]](List()))

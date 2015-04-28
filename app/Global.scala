@@ -10,8 +10,8 @@ object Global extends GlobalSettings with ScaldiSupport {
 }
 
 class NotifyModule extends Module {
-  bind[Notifier] when inProdMode to new NexmoSMSNotifier
-  bind[Notifier] when (inDevMode or inTestMode) to new ConsoleNotifier
+//  bind[Notifier] when inProdMode to new NexmoSMSNotifier
+  bind[Notifier] when (inProdMode or inDevMode or inTestMode) to new ConsoleNotifier
 }
 
 class AllocationModule extends Module {

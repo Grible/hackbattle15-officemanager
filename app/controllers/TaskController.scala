@@ -17,8 +17,12 @@ class TaskController(implicit inj: Injector) extends Controller {
 
   def addTask = Action { request =>
     val name = request.body.asFormUrlEncoded.get.get("description").get.head
-    val task: Task = Task(name)
+    val schedule = request.body.asFormUrlEncoded.get.get("schedule")
+
+    println("\nSCHEDULE " + schedule + "\n")
+    val task: Task = Task(name, schedule)
     taskDAO.add(task)
+    println("\nSCHEDULE " + task.schedule + "\n")
     taskAllocator.allocateTask(task)
     Redirect(listTasksRoute)
   }

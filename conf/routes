@@ -3,14 +3,14 @@
 # ~~~~
 
 # Home page
-GET         /                           @controllers.TaskController.listAllocations
+GET         /                           @controllers.AllocationController.listAllocations
+POST         /allocations/:id/notify    @controllers.AllocationController.sendReminderOfAllocationWithID(id: Int)
 
 GET         /crew                       @controllers.CrewController.showCrew
 POST        /crew/add                   @controllers.CrewController.addPerson
 POST        /crew/:id                   @controllers.CrewController.updatePerson(id: Int)
 POST        /crew/:id/delete            @controllers.CrewController.deletePerson(id: Int)
 
-GET         /tasks                      @controllers.TaskController.listAllocations
 GET         /tasks/add                  @controllers.TaskController.addTask
 POST        /tasks/add                  @controllers.TaskController.addTask
 POST        /tasks/:id                  @controllers.TaskController.updateTask(id: Int)

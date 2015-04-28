@@ -28,3 +28,9 @@ $('.delete-task-btn').on('click', function(e){
 	var form = $(this).parent();
 	form.submit();
 })
+
+$('.remind-task-btn').on('click', function(e){
+	e.preventDefault();
+	var form = $(this).parent();
+	form.submit();
+})

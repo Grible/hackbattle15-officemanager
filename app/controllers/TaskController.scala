@@ -12,7 +12,7 @@ import service.{TaskAllocator, TaskDAO}
 class TaskController(implicit inj: Injector) extends Controller {
   val taskAllocator = inject[TaskAllocator]
   val taskDAO = inject[TaskDAO]
-  val listTasksRoute = routes.TaskController.listAllocations()
+  val listTasksRoute = routes.AllocationController.listAllocations()
   val allTasksDummyNeededForInit = taskDAO.all
 
   def addTask = Action { request =>
@@ -20,12 +20,7 @@ class TaskController(implicit inj: Injector) extends Controller {
     val task: Task = Task(name)
     taskDAO.add(task)
     taskAllocator.allocateTask(task)
-
     Redirect(listTasksRoute)
-  }
-
-  def listAllocations = Action {
-    Ok(views.html.tasks(taskAllocator.allocations))
   }
 
   def updateTask(id: Int) = Action { request =>
@@ -39,6 +34,4 @@ class TaskController(implicit inj: Injector) extends Controller {
     taskDAO.delete(id)
     Redirect(listTasksRoute)
   }
-
-
 }

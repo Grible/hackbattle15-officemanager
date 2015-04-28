@@ -6,8 +6,8 @@ import model.Person
 import play.Play
 import play.api.Logger
 
-class NexmoNotifier extends Notifier {
-  val logger = Logger("NexmoNotifier")
+class NexmoSMSNotifier extends Notifier {
+  val logger = Logger("NexmoSMSNotifier")
   val apiurl = Play.application().configuration().getString("nexmo.api.url")
   val apikey = Play.application().configuration().getString("nexmo.api.key")
   val apisecret = Play.application().configuration().getString("nexmo.api.secret")
@@ -19,7 +19,6 @@ class NexmoNotifier extends Notifier {
     logger.info("send sms: " + url)
     scala.io.Source.fromURL(url).mkString
   }
-
 }
 
 class ConsoleNotifier extends Notifier {

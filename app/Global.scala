@@ -1,4 +1,4 @@
-import controllers.{CrewController, Dropbox, TaskController}
+import controllers.{AllocationController, CrewController, Dropbox, TaskController}
 import play.api.GlobalSettings
 import scaldi.Module
 import scaldi.play.ScaldiSupport
@@ -6,13 +6,16 @@ import scaldi.play.condition._
 import service._
 
 object Global extends GlobalSettings with ScaldiSupport {
-  def applicationModule = new WebModule :: new SmsModule :: new TaskModule :: new CrewModule
+  def applicationModule = new WebModule :: new NotifyModule :: new AllocationModule :: new TaskModule :: new CrewModule
 }
 
-
-class SmsModule extends Module {
-  bind[Notifier] when inProdMode to new NexmoNotifier
+class NotifyModule extends Module {
+  bind[Notifier] when inProdMode to new NexmoSMSNotifier
   bind[Notifier] when (inDevMode or inTestMode) to new ConsoleNotifier
+}
+
+class AllocationModule extends Module {
+  binding to new AllocationController
 }
 
 class TaskModule extends Module {

@@ -10,12 +10,9 @@ import org.yaml.snakeyaml.{DumperOptions, Yaml}
 /**
  * Created by steven on 22/04/15.
  */
-class Task(namein: String, schedulein:Option[Seq[String]] ) {
-  @BeanProperty var name: String = namein
-  var id: Int = IDGen.get
-  var schedule: Option[Seq[String]] =  schedulein
-
-}
+case class Task(name: String,
+                weekDaysToExecute:Seq[String] = Seq.empty[String],
+                id: String = java.util.UUID.randomUUID().toString)
 
 object WeekDay extends Enumeration {
   val mon = Value("Monday")
@@ -28,13 +25,6 @@ object WeekDay extends Enumeration {
 }
 
 object Task {
-  def apply(name: String, schedule: Option[Seq[String]]) = {
-    val task: Task = new Task(name, schedule)
-    task.name = name
-    task.schedule = schedule
-    task
-  }
-
   implicit def taskToYamlInputStream(task: Task): InputStream = {
     val options = new DumperOptions()
     options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
@@ -42,9 +32,4 @@ object Task {
     val output: String = yaml.dump(task)
     new ByteArrayInputStream(output.getBytes(StandardCharsets.UTF_8))
   }
-
 }
-
-
-
-

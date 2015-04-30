@@ -14,26 +14,22 @@ class DummyTaskDAO(implicit inj: Injector) extends TaskDAO {
 
   override def all: Set[Task] = _all
 
-  private val task1: Task = Task("do the dishes!", Option[Seq[String]](List()))
+  private val task1: Task = Task("do the dishes")
   add(task1)
   taskAllocator.allocateTask(task1)
-  private val task2: Task = Task("vacuum cleaning", Option[Seq[String]](List()))
+  private val task2: Task = Task("vacuum cleaning")
   taskAllocator.allocateTask(task2)
   add(task2)
 
-  override def add(task: Task) = {
-    _all += task
-    _all
-  }
+  override def add(task: Task) =  _all += task
 
-  override def get(id: Int) = _all.find(_.id == id).get
+  override def get(id: String) = _all.find(_.id == id).get
 
-  override def delete(id: Int) = {
-    _all -= get(id)
-    _all
-  }
+  override def delete(task: Task) = _all -= task
 
   override def toString: String = _all.toString()
+
+  override def set(task: Task, updatedTask: Task) = _all = _all - task + updatedTask
 }
 
 trait TaskDAO {
@@ -41,10 +37,12 @@ trait TaskDAO {
 
   def all: Set[Task]
 
-  def add(task: Task): Set[Task]
+  def add(task: Task): Unit
 
-  def get(id: Int): Task
+  def get(id: String): Task
 
-  def delete(id: Int): Set[Task]
+  def set(task: Task, updatedTask: Task): Unit
+
+  def delete(task: Task): Unit
 
 }

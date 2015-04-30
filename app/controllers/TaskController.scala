@@ -15,27 +15,31 @@ class TaskController(implicit inj: Injector) extends Controller {
   val listTasksRoute = routes.AllocationController.listAllocations()
   val allTasksDummyNeededForInit = taskDAO.all
 
-  def addTask = Action { request =>
+  def addAndAllocateTask = Action { request =>
     val name = request.body.asFormUrlEncoded.get.get("description").get.head
     val schedule = request.body.asFormUrlEncoded.get.get("schedule")
 
     println("\nSCHEDULE " + schedule + "\n")
-    val task: Task = Task(name, schedule)
+    val task: Task = Task(name)
     taskDAO.add(task)
-    println("\nSCHEDULE " + task.schedule + "\n")
     taskAllocator.allocateTask(task)
     Redirect(listTasksRoute)
   }
 
-  def updateTask(id: Int) = Action { request =>
+  def updateTask(id: String) = Action { request =>
     val name = request.body.asFormUrlEncoded.get.get("name").get.head
-    val task = taskDAO.get(id.toInt)
-    task.name = name
+    val task = taskDAO.get(id)
+    val updatedTask = task.copy(name = name)
+    println(taskDAO.all)
+    taskDAO.set(task, updatedTask)
+    println(taskDAO.all)
+
     Redirect(listTasksRoute)
   }
 
-  def deleteTask(id: Int) = Action {
-    taskDAO.delete(id)
+  def deleteTask(id: String) = Action {
+    val task = taskDAO.get(id)
+    taskDAO.delete(task)
     Redirect(listTasksRoute)
   }
 }

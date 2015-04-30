@@ -29,8 +29,7 @@ class TaskAllocatorImpl(implicit inj: Injector) extends TaskAllocator {
   private def notifyPersonOfAllocation(alloc: Allocation): Unit = {
     val taskName: String = alloc.task.name
     val username: String = alloc.person.name
-    val schedule: Option[Seq[String]] = alloc.task.schedule
-    val message = s"Hi $username! This is Naggy. You have a task: $taskName! Please do this on $schedule"
+    val message = s"Hi $username! This is Naggy. You have a task: $taskName!"
     notifier.notify(alloc.person, message)
   }
 

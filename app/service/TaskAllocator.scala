@@ -34,6 +34,10 @@ class TaskAllocatorImpl(implicit inj: Injector) extends TaskAllocator {
   }
 
   def getAllocation(id: Int): Allocation = {allocations.find(_.task.id == id).get}
+
+  implicit def task(alloc: Allocation): Task = {
+    alloc.taskID
+  }
 }
 
 trait TaskAllocator {

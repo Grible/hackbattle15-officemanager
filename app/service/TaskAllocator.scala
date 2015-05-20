@@ -35,11 +35,27 @@ class TaskAllocatorImpl(implicit inj: Injector) extends TaskAllocator {
 
   override def processAllocatableEvent(event: AllocatableUpdatedEvent): Unit = {
     event match {
+      case event: PersonDeletedEvent =>
+        reassignAllocationsWithPersonID(event.id)
+      case event: PersonUpdatedEvent =>
+        updateAllocationsWithPersonID(event.id, event.newPerson)
       case event: TaskDeletedEvent =>
         deleteAllocationsWithTaskID(event.id)
       case event: TaskUpdatedEvent =>
         updateAllocationsWithTaskID(event.id, event.newTask)
     }
+  }
+
+  private def updateAllocationsWithPersonID(id: String, newPerson: Person): Unit = {
+    val allocationsToUpdate = allocations.filter(_.person.id == id)
+    allocations --= allocationsToUpdate
+    allocations ++= allocationsToUpdate.map(_.copy(person = newPerson))
+  }
+
+  private def reassignAllocationsWithPersonID(id: String): Unit = {
+    val allocationsToReassign = allocations.filter(_.person.id == id)
+    allocations --= allocationsToReassign
+    allocations ++= allocationsToReassign.map(_.copy(person = selectRandomPerson())) // TODO: notify person of the new allocation which has been made because another person was removed
   }
 
   private def updateAllocationsWithTaskID(id: String, newTask: Task): Unit = {
@@ -68,5 +84,7 @@ trait TaskAllocator {
 
 sealed trait AllocatableUpdatedEvent
 
+case class PersonUpdatedEvent(id: String, newPerson: Person) extends AllocatableUpdatedEvent
+case class PersonDeletedEvent(id: String) extends AllocatableUpdatedEvent
 case class TaskUpdatedEvent(id: String, newTask: Task) extends AllocatableUpdatedEvent
 case class TaskDeletedEvent(id: String) extends AllocatableUpdatedEvent

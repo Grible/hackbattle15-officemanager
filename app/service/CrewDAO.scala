@@ -13,17 +13,11 @@ class DummyCrewDAO extends CrewDAO {
   add(Person("Arthur", "31611734558", routes.Assets.at("images/avatar-leon.jpeg").url))
   add(Person("Steven", "31624434821", routes.Assets.at("images/avatar-kevin.jpeg").url))
 
-  override def add(person: Person): Set[Person] = {
-    persons += person
-    persons
-  }
+  override def add(person: Person) = persons += person
 
   override def get(id: Int): Person = persons.find(_.id == id).get
 
-  override def delete(id: Int): Set[Person] = {
-    persons = persons - get(id)
-    persons
-  }
+  override def delete(id: Int) = persons -= get(id)
 
   override def toString: String = persons.toString
 }
@@ -31,9 +25,9 @@ class DummyCrewDAO extends CrewDAO {
 trait CrewDAO {
   def persons: Set[Person]
 
-  def add(person: Person): Set[Person]
+  def add(person: Person): Unit
 
   def get(id: Int): Person
 
-  def delete(id: Int): Set[Person]
+  def delete(id: Int): Unit
 }

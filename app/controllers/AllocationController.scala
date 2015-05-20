@@ -22,7 +22,7 @@ class AllocationController(implicit inj: Injector) extends Controller {
     Ok(views.html.tasks(taskAllocator.allocations))
   }
 
-  def sendReminderOfAllocationWithID(id: Int) = Action { request =>
+  def sendReminderOfAllocationWithID(id: String) = Action { request =>
     val alloc: Allocation = taskAllocator.getAllocation(id)
     remindPersonOfAllocation(alloc)
     Redirect(listTasksRoute)

@@ -33,17 +33,30 @@ class TaskAllocatorImpl(implicit inj: Injector) extends TaskAllocator {
     notifier.notify(alloc.person, message)
   }
 
-  def getAllocation(id: Int): Allocation = {allocations.find(_.task.id == id).get}
-
-  implicit def task(alloc: Allocation): Task = {
-    alloc.taskID
+  override def processAllocatableEvent(event: AllocatableUpdatedEvent): Unit = {
+    event match {
+      case event: TaskDeletedEvent => 
+        deleteAllocationsWithTaskID(event.id) 
+    }
   }
+
+  private def deleteAllocationsWithTaskID(id: String) = allocations = allocations.filterNot(_.task.id == id)
+
+  override def getAllocation(id: String): Allocation = allocations.find(_.task.id == id).get
 }
 
 trait TaskAllocator {
   def allocateTask(task: Task): Allocation
 
-  def getAllocation(id: Int): Allocation
+  def getAllocation(id: String): Allocation
 
   def allocations: Set[Allocation]
+
+  def processAllocatableEvent(event: AllocatableUpdatedEvent): Unit
 }
+
+sealed trait AllocatableUpdatedEvent {
+  def id: String
+}
+
+case class TaskDeletedEvent(id: String) extends AllocatableUpdatedEvent

@@ -22,7 +22,7 @@ class TaskAllocatorImpl(implicit inj: Injector) extends TaskAllocator {
   def allocateTask(task: Task): Allocation = {
     val alloc = Allocation(selectRandomPerson(), task)
     notifyPersonOfAllocation(alloc)
-    allocations = allocations + alloc
+    allocations += alloc
     alloc
   }
 
@@ -32,7 +32,6 @@ class TaskAllocatorImpl(implicit inj: Injector) extends TaskAllocator {
     val message = s"Hi $username! This is Naggy. You have a task: $taskName!"
     notifier.notify(alloc.person, message)
   }
-
 
   override def processAllocatableEvent(event: AllocatableUpdatedEvent): Unit = {
     event match {
@@ -67,9 +66,7 @@ trait TaskAllocator {
   def processAllocatableEvent(event: AllocatableUpdatedEvent): Unit
 }
 
-sealed trait AllocatableUpdatedEvent {
-  def id: String
-}
+sealed trait AllocatableUpdatedEvent
 
 case class TaskUpdatedEvent(id: String, newTask: Task) extends AllocatableUpdatedEvent
 case class TaskDeletedEvent(id: String) extends AllocatableUpdatedEvent

@@ -4,7 +4,7 @@
 
 # Home page
 GET         /                           @controllers.AllocationController.listAllocations
-POST         /allocations/:id/notify    @controllers.AllocationController.sendReminderOfAllocationWithID(id: String)
+POST        /allocations/:id/notify    @controllers.AllocationController.sendReminderOfAllocationWithID(id: String)
 
 GET         /crew                       @controllers.CrewController.showCrew
 POST        /crew/add                   @controllers.CrewController.addPerson

@@ -1,5 +1,10 @@
 ## Version history
 
+### Roadmap short-term
+- Fix task/person updating with allocations (immutability)
+- Remove phone numbers/names from src and possibly externalize in file/environment var
+- Remove dropbox stuff
+
 ### v0.2.0
 - hooked up task allocations to task overview page
 - fixed gitignore for front-end dependencies

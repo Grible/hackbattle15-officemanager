@@ -1,4 +1,8 @@
-This is your new Play application
-=================================
+Naggy
+=====
 
-This file will be packaged with your application, when using `activator dist`.
+Naggy is a product by [Grible](http://grible.co). She's a virtual office manager who removes the hassle of recurring office tasks (watering the plants, cleaning the kitchen, etc). People in your community get text messages whenever a task is assigned to them. Read more on [Naggy's site](http://naggy.co).
+
+Development
+-----------
+Naggy is a Play Scala project using SBT. Run `activator play-run` or `activator ~play-run` (hot reloading) during development.

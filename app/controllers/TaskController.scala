@@ -4,7 +4,7 @@ import model.Task
 import play.api.mvc._
 import scaldi.Injectable._
 import scaldi.Injector
-import service.{TaskDeletedEvent, TaskAllocator, TaskDAO}
+import service.{TaskUpdatedEvent, TaskDeletedEvent, TaskAllocator, TaskDAO}
 
 /**
  * Created by steven on 23/04/15.
@@ -30,10 +30,9 @@ class TaskController(implicit inj: Injector) extends Controller {
     val name = request.body.asFormUrlEncoded.get.get("name").get.head
     val task = taskDAO.get(id)
     val updatedTask = task.copy(name = name)
-    println(taskDAO.all)
     taskDAO.set(task, updatedTask)
-    println(taskDAO.all)
-
+    val event = TaskUpdatedEvent(id, updatedTask)
+    taskAllocator.processAllocatableEvent(event)
     Redirect(listTasksRoute)
   }
 

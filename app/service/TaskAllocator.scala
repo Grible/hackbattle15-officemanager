@@ -33,10 +33,22 @@ class TaskAllocatorImpl(implicit inj: Injector) extends TaskAllocator {
     notifier.notify(alloc.person, message)
   }
 
+
   override def processAllocatableEvent(event: AllocatableUpdatedEvent): Unit = {
     event match {
-      case event: TaskDeletedEvent => 
-        deleteAllocationsWithTaskID(event.id) 
+      case event: TaskDeletedEvent =>
+        deleteAllocationsWithTaskID(event.id)
+      case event: TaskUpdatedEvent =>
+        updateAllocationsWithTaskID(event.id, event.newTask)
+    }
+  }
+
+  private def updateAllocationsWithTaskID(id: String, newTask: Task): Unit = {
+    val allocationsToUpdate = allocations.filter(_.task.id == id)
+
+    for (alloc <- allocationsToUpdate) {
+      allocations -= alloc
+      allocations += alloc.copy(task = newTask)
     }
   }
 
@@ -59,4 +71,5 @@ sealed trait AllocatableUpdatedEvent {
   def id: String
 }
 
+case class TaskUpdatedEvent(id: String, newTask: Task) extends AllocatableUpdatedEvent
 case class TaskDeletedEvent(id: String) extends AllocatableUpdatedEvent

@@ -1,10 +1,11 @@
 package controllers
 
+import dao.TaskDAO
 import model.Task
 import play.api.mvc._
 import scaldi.Injectable._
 import scaldi.Injector
-import service.{TaskUpdatedEvent, TaskDeletedEvent, TaskAllocator, TaskDAO}
+import service.{TaskUpdatedEvent, TaskDeletedEvent, TaskAllocator}
 
 /**
  * Created by steven on 23/04/15.

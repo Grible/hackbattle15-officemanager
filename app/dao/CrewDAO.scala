@@ -1,4 +1,4 @@
-package service
+package dao
 
 import controllers.routes
 import model.Person

@@ -1,8 +1,9 @@
-package service
+package dao
 
 import model.Task
 import scaldi.Injectable._
 import scaldi.Injector
+import service.TaskAllocator
 
 /**
  * Created by damirv on 24/04/15.

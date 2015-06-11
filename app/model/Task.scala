@@ -23,13 +23,3 @@ object WeekDay extends Enumeration {
   val sat = Value("Saturday")
   val sun = Value("Sunday")
 }
-
-object Task {
-  implicit def taskToYamlInputStream(task: Task): InputStream = {
-    val options = new DumperOptions()
-    options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK)
-    val yaml: Yaml = new Yaml(options)
-    val output: String = yaml.dump(task)
-    new ByteArrayInputStream(output.getBytes(StandardCharsets.UTF_8))
-  }
-}

@@ -1,10 +1,10 @@
 package controllers
 
+import dao.CrewDAO
 import model.Person
 import play.api.mvc._
 import scaldi.Injectable._
 import scaldi.Injector
-import service.CrewDAO
 
 /**
  * Created by steven on 23/04/15.

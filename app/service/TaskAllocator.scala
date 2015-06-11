@@ -1,90 +1,49 @@
 package service
 
 
+import dao.AllocationDAO
 import model._
 import play.api.Logger
 import scaldi.Injectable._
 import scaldi.Injector
-
-import scala.util.Random
 
 /**
  * Created by steven on 23/04/15.
  */
 class TaskAllocatorImpl(implicit inj: Injector) extends TaskAllocator {
   val logger = Logger("TaskAllocator")
-  val crewDAO = inject[CrewDAO]
   val notifier = inject[Notifier]
 
-  var allocations: Set[Allocation] = Set()
-  val selectRandomPerson = () => Random.shuffle(crewDAO.persons).head
+  val allocationDAO = inject[AllocationDAO]
 
-  def allocateTask(task: Task): Allocation = {
-    val alloc = Allocation(selectRandomPerson(), task)
-    notifyPersonOfAllocation(alloc)
-    allocations += alloc
-    alloc
-  }
+  import play.libs.Akka
 
-  private def notifyPersonOfAllocation(alloc: Allocation): Unit = {
-    val taskName: String = alloc.task.name
-    val username: String = alloc.person.name
-    val message = s"Hi $username! This is Naggy. You have a task: $taskName!"
-    notifier.notify(alloc.person, message)
-  }
+  import akka.actor.Actor
+  import akka.actor.Props
+  import scala.concurrent.duration._
 
-  override def processAllocatableEvent(event: AllocatableUpdatedEvent): Unit = {
-    event match {
-      case event: PersonDeletedEvent =>
-        reassignAllocationsWithPersonID(event.id)
-      case event: PersonUpdatedEvent =>
-        updateAllocationsWithPersonID(event.id, event.newPerson)
-      case event: TaskDeletedEvent =>
-        deleteAllocationsWithTaskID(event.id)
-      case event: TaskUpdatedEvent =>
-        updateAllocationsWithTaskID(event.id, event.newTask)
+  val notifyActor = Akka.system.actorOf(Props(new Actor {
+    def receive = {
+      case _ ⇒ publishTodaysAllocations
     }
+  }))
+
+
+  //Schedules to send the "foo"-message to the testActor after 50ms
+  Akka.system.scheduler.scheduleOnce(10 seconds, notifyActor, "please send the messages")
+
+
+
+
+
+  override def publishTodaysAllocations: Unit = {
+    val allocations: Set[Allocation] = allocationDAO.getAllocations
+    allocations.foreach(a => {
+      notifier.notify(a.person, s"Please do ${a.taskName}")
+    })
   }
-
-  private def updateAllocationsWithPersonID(id: String, newPerson: Person): Unit = {
-    val allocationsToUpdate = allocations.filter(_.person.id == id)
-    allocations --= allocationsToUpdate
-    allocations ++= allocationsToUpdate.map(_.copy(person = newPerson))
-  }
-
-  private def reassignAllocationsWithPersonID(id: String): Unit = {
-    val allocationsToReassign = allocations.filter(_.person.id == id)
-    allocations --= allocationsToReassign
-    allocations ++= allocationsToReassign.map(_.copy(person = selectRandomPerson())) // TODO: notify person of the new allocation which has been made because another person was removed
-  }
-
-  private def updateAllocationsWithTaskID(id: String, newTask: Task): Unit = {
-    val allocationsToUpdate = allocations.filter(_.task.id == id)
-
-    for (alloc <- allocationsToUpdate) {
-      allocations -= alloc
-      allocations += alloc.copy(task = newTask)
-    }
-  }
-
-  private def deleteAllocationsWithTaskID(id: String) = allocations = allocations.filterNot(_.task.id == id)
-
-  override def getAllocation(id: String): Allocation = allocations.find(_.task.id == id).get
 }
 
 trait TaskAllocator {
-  def allocateTask(task: Task): Allocation
-
-  def getAllocation(id: String): Allocation
-
-  def allocations: Set[Allocation]
-
-  def processAllocatableEvent(event: AllocatableUpdatedEvent): Unit
+  def publishTodaysAllocations: Unit
 }
-
-sealed trait AllocatableUpdatedEvent
-
-case class PersonUpdatedEvent(id: String, newPerson: Person) extends AllocatableUpdatedEvent
-case class PersonDeletedEvent(id: String) extends AllocatableUpdatedEvent
-case class TaskUpdatedEvent(id: String, newTask: Task) extends AllocatableUpdatedEvent
-case class TaskDeletedEvent(id: String) extends AllocatableUpdatedEvent

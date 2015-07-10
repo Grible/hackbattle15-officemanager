@@ -1,3 +1,4 @@
+import controllers.AllocationController
 import dao._
 import play.api.GlobalSettings
 import scaldi.Module
@@ -14,7 +15,7 @@ class NotifyModule extends Module {
 }
 
 class AllocationModule extends Module {
-  //  binding to new AllocationController
+  binding to new AllocationController
   bind[AllocationDAO] to new DummyAllocationDAO
 }
 
@@ -22,7 +23,7 @@ class TaskModule extends Module {
   //  binding to new TaskController
   bind[TaskAllocator] to new TaskAllocatorImpl
   //  bind[TaskDAO] when inProdMode to new DummyTaskDAO // TODO: replace with prod implementation
-  //  bind[TaskDAO] when (inDevMode or inTestMode) to new DummyTaskDAO
+    bind[TaskDAO] when (inDevMode or inTestMode) to new DummyTaskDAO
 }
 
 class CrewModule extends Module {

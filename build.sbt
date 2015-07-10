@@ -15,8 +15,6 @@ libraryDependencies ++= Seq(
   ws,
   filters,
   "org.scalaj" %% "scalaj-http" % "1.0.1",
-  "com.github.Shinsuke-Abe" %% "dropbox4s" % "0.2.0",
-  "org.yaml" % "snakeyaml" % "1.13",
   "org.scaldi" %% "scaldi-play" % "0.5.4"
 )
 

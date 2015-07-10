@@ -16,12 +16,11 @@ class TaskAllocatorImpl(implicit inj: Injector) extends TaskAllocator {
 
   val allocationDAO = inject[AllocationDAO]
 
+  import akka.actor.{Actor, Props}
+  import play.api.libs.concurrent.Execution.Implicits._
   import play.libs.Akka
 
-  import akka.actor.Actor
-  import akka.actor.Props
   import scala.concurrent.duration._
-  import play.api.libs.concurrent.Execution.Implicits._
 
   val notifyActor = Akka.system.actorOf(Props(new Actor {
     def receive = {
@@ -34,9 +33,9 @@ class TaskAllocatorImpl(implicit inj: Injector) extends TaskAllocator {
 
 
   override def publishTodaysAllocations: Unit = {
-    val allocations: Set[Allocation] = allocationDAO.getAllocations
+    val allocations: List[Allocation] = allocationDAO.getAllocations
     allocations.foreach(a => {
-      notifier.notify(a.person, s"Please do ${a.taskName}")
+      notifier.notify(a.person, s"Please do ${a.task.name}")
     })
   }
 }

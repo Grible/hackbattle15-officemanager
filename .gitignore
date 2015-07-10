@@ -27,3 +27,4 @@ results/
 results-trace/
 db
 .sass-cache/
+.sbtserver.lock

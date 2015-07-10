@@ -1,5 +1,7 @@
 package model
 
+import java.time.LocalDateTime
+
 import controllers.routes
 
 /**
@@ -9,5 +11,6 @@ import controllers.routes
 case class Person(name: String,
                   phone: String,
                   avatarSrc: String = routes.Assets.at("images/favicon.png").url,
-                  id: String = java.util.UUID.randomUUID().toString) {
+                  id: String = java.util.UUID.randomUUID().toString,
+                  dateAdded: LocalDateTime = LocalDateTime.now()) {
 }

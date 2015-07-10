@@ -21,6 +21,7 @@ class TaskAllocatorImpl(implicit inj: Injector) extends TaskAllocator {
   import akka.actor.Actor
   import akka.actor.Props
   import scala.concurrent.duration._
+  import play.api.libs.concurrent.Execution.Implicits._
 
   val notifyActor = Akka.system.actorOf(Props(new Actor {
     def receive = {
@@ -29,11 +30,7 @@ class TaskAllocatorImpl(implicit inj: Injector) extends TaskAllocator {
   }))
 
 
-  //Schedules to send the "foo"-message to the testActor after 50ms
   Akka.system.scheduler.scheduleOnce(10 seconds, notifyActor, "please send the messages")
-
-
-
 
 
   override def publishTodaysAllocations: Unit = {

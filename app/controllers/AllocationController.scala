@@ -19,8 +19,8 @@ class AllocationController(implicit inj: Injector) extends Controller {
   val taskDAO = inject[TaskDAO]
 
   def listAllocations = Action {
-    println(taskAllocator.allocations)
-    Ok(views.html.tasks(taskAllocator.allocations))
+//    Ok(views.html.tasks(taskAllocator.allocations))
+    Ok("started")
   }
 
   def sendReminderOfAllocationWithID(id: String) = Action { request =>

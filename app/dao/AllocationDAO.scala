@@ -3,19 +3,27 @@ package dao
 import java.time.LocalDate
 
 import model.{Allocation, Person, Task}
+import scaldi.Injectable._
 import scaldi.Injector
-
 /**
  * Created by steven on 11/06/15.
  */
 class DummyAllocationDAO(implicit inj: Injector) extends AllocationDAO {
+  val taskDAO: TaskDAO = inject[TaskDAO]
+  val crewDAO: CrewDAO = inject[CrewDAO]
+
   val arthur = Person("Arthur", "1234567")
   val steven = Person("Steven", "9874567")
-  val dishes = Task("Do the dishes")
-  val vacuum = Task("Vacuum clean")
+  crewDAO.add(arthur)
+  crewDAO.add(steven)
 
-  val allocation1 = Allocation(arthur, dishes, LocalDate.now())
-  val allocation2 = Allocation(steven, vacuum, LocalDate.now())
+  val dishes = Task("the dishes")
+  val vacuum = Task("vacuum cleaning")
+  taskDAO.add(dishes)
+  taskDAO.add(vacuum)
+
+  val allocation1 = Allocation(arthur.id, dishes.id, LocalDate.now())
+  val allocation2 = Allocation(steven.id, vacuum.id, LocalDate.now())
 
   override def getAllocations: List[Allocation] = List(allocation1, allocation2)
 }

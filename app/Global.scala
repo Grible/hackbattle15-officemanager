@@ -7,7 +7,7 @@ import scaldi.play.condition._
 import service._
 
 object Global extends GlobalSettings with ScaldiSupport {
-  def applicationModule = new NotifyModule :: new AllocationModule :: new TaskModule :: new CrewModule
+  def applicationModule = new NotifyModule :: new TaskModule :: new CrewModule :: new AllocationModule
 }
 
 class NotifyModule extends Module {
@@ -23,12 +23,12 @@ class TaskModule extends Module {
   //  binding to new TaskController
   bind[TaskAllocator] to new TaskAllocatorImpl
   //  bind[TaskDAO] when inProdMode to new DummyTaskDAO // TODO: replace with prod implementation
-    bind[TaskDAO] when (inDevMode or inTestMode) to new DummyTaskDAO
+  bind[TaskDAO] when (inDevMode or inTestMode) to new DummyTaskDAO
 }
 
 class CrewModule extends Module {
   //  binding to new CrewController
   //  bind[CrewDAO] when inProdMode to new DummyCrewDAO // TODO: replace with prod implementation
-  //  bind[CrewDAO] when (inDevMode or inTestMode) to new DummyCrewDAO
+  bind[CrewDAO] when (inDevMode or inTestMode) to new DummyCrewDAO
 }
 

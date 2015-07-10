@@ -15,9 +15,9 @@ class DummyCrewDAO extends CrewDAO {
 
   override def add(person: Person) = persons += person
 
-  override def get(id: Int): Person = persons.find(_.id == id).get
+  override def get(id: String): Person = persons.find(_.id == id).get
 
-  override def delete(id: Int) = persons -= get(id)
+  override def delete(id: String) = persons -= get(id)
 
   override def toString: String = persons.toString
 }
@@ -27,7 +27,7 @@ trait CrewDAO {
 
   def add(person: Person): Unit
 
-  def get(id: Int): Person
+  def get(id: String): Person
 
-  def delete(id: Int): Unit
+  def delete(id: String): Unit
 }

@@ -9,8 +9,6 @@ import service.TaskAllocator
  * Created by damirv on 24/04/15.
  */
 class DummyTaskDAO(implicit inj: Injector) extends TaskDAO {
-  override val taskAllocator = inject[TaskAllocator]
-
   private var _all: Set[Task] = Set()
 
   override def all: Set[Task] = _all
@@ -27,8 +25,6 @@ class DummyTaskDAO(implicit inj: Injector) extends TaskDAO {
 }
 
 trait TaskDAO {
-  def taskAllocator: TaskAllocator
-
   def all: Set[Task]
 
   def add(task: Task): Unit

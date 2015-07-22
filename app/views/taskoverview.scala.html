@@ -12,36 +12,36 @@
 
 <div class="container">
 
-    @*<ul class="task-list">*@
-        @*@for(alloc <- allocations) {*@
-            @*@defining(allocation.task) { task =>*@
+    <ul class="task-list">
+        @for(taskMeta <- tasks) {
+            @defining(taskMeta.task) { task =>
 
-            @*<li class="task">*@
-                    @*<header>*@
-                        @*<form data-task-id="@task.id" action="taskoverview/@task.id" method="POST" style="display: inline-block">*@
-                            @*<input class="title" type="text" value="@task.name" name="name" data-task-id="@task.id" placeholder="Describe your task"/>*@
-                        @*</form>*@
-                        @*<ul class="days-indicator">*@
-                            @*<li>Monday</li>*@
-                            @*<li>Wednesday</li>*@
-                            @*<li class="active">Thursday</li>*@
-                        @*</ul>*@
-                    @*</header>*@
-                    @*<aside>*@
-                        @*<span>next up on Thursday</span>*@
-                        @*<img src="@allocation.person.avatarSrc" class="user-avatar">*@
-                        @*<a href="#" class="change-btn" data-task-id="@task.id"></a>*@
-                        @*<form action="taskoverview/@task.id/delete" method="POST">*@
-                            @*<a href="#" class="delete-task-btn entypo-trash"></a>*@
-                        @*</form>*@
-                        @*<form action="allocations/@task.id/notify" method="POST">*@
-                            @*<a href="#" class="remind-task-btn">notify</a>*@
-                        @*</form>*@
-                    @*</aside>*@
-            @*</li>*@
-            @*}*@
-        @*}*@
-    @*</ul>*@
+            <li class="task">
+                    <header>
+                        <form data-task-id="@task.id" action="taskoverview/@task.id" method="POST" style="display: inline-block">
+                            <input class="title" type="text" value="@task.name" name="name" data-task-id="@task.id" placeholder="Describe your task"/>
+                        </form>
+                        <ul class="days-indicator">
+                            <li>Monday</li>
+                            <li>Wednesday</li>
+                            <li class="active">Thursday</li>
+                        </ul>
+                    </header>
+                    <aside>
+                        <span>next up on @taskMeta.upcomingAlloc.executionDate.toString</span>
+                        <img src="@taskMeta.upcomingAllocPerson.avatarSrc" class="user-avatar">
+                        <a href="#" class="change-btn" data-task-id="@task.id"></a>
+                        <form action="taskoverview/@task.id/delete" method="POST">
+                            <a href="#" class="delete-task-btn entypo-trash"></a>
+                        </form>
+                        <form action="allocations/@task.id/notify" method="POST">
+                            <a href="#" class="remind-task-btn">notify</a>
+                        </form>
+                    </aside>
+            </li>
+            }
+        }
+    </ul>
 
     <form action="/taskoverview/add" method="POST" class="create hide">
         <div class="input-box">

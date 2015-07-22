@@ -10,7 +10,7 @@ import scaldi.Injector
  */
 class DummyAllocationDAO(implicit inj: Injector) extends AllocationDAO {
   val taskDAO: TaskDAO = inject[TaskDAO]
-  val crewDAO: CrewDAO = inject[CrewDAO]
+  val crewDAO: PersonDAO = inject[PersonDAO]
 
   val arthur = Person("Arthur", "1234567")
   val steven = Person("Steven", "9874567")
@@ -25,9 +25,9 @@ class DummyAllocationDAO(implicit inj: Injector) extends AllocationDAO {
   val allocation1 = Allocation(arthur.id, dishes.id, LocalDate.now())
   val allocation2 = Allocation(steven.id, vacuum.id, LocalDate.now())
 
-  override def getAllocations: List[Allocation] = List(allocation1, allocation2)
+  override def allocations: List[Allocation] = List(allocation1, allocation2)
 }
 
 trait AllocationDAO {
-  def getAllocations: List[Allocation]
+  def allocations: List[Allocation]
 }

@@ -7,14 +7,14 @@ GET  	      /                           @controllers.AllocationController.listAl
 # GET         /                           @controllers.AllocationController.listAllocations
 # POST        /allocations/:id/notify     @controllers.AllocationController.sendReminderOfAllocationWithID(id: String)
 #
-# GET         /crew                       @controllers.CrewController.showCrew
-# POST        /crew/add                   @controllers.CrewController.addPerson
-# POST        /crew/:id                   @controllers.CrewController.updatePerson(id: Int)
-# POST        /crew/:id/delete            @controllers.CrewController.deletePerson(id: Int)
+# GET         /persons                       @controllers.CrewController.showCrew
+# POST        /persons/add                   @controllers.CrewController.addPerson
+# POST        /persons/:id                   @controllers.CrewController.updatePerson(id: Int)
+# POST        /persons/:id/delete            @controllers.CrewController.deletePerson(id: Int)
 #
-# POST        /tasks/add                  @controllers.TaskController.addAndAllocateTask
-# POST        /tasks/:id                  @controllers.TaskController.updateTask(id: String)
-# POST        /tasks/:id/delete           @controllers.TaskController.deleteTask(id: String)
+# POST        /taskoverview/add                  @controllers.TaskController.addAndAllocateTask
+# POST        /taskoverview/:id                  @controllers.TaskController.updateTask(id: String)
+# POST        /taskoverview/:id/delete           @controllers.TaskController.deleteTask(id: String)
 #
 # GET         /dropbox                    @controllers.Dropbox.index
 # GET         /dropbox/test               @controllers.Dropbox.uploadFileTest

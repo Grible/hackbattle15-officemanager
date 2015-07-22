@@ -1,23 +1,23 @@
 @(persons: Set[model.Person])
 
-@main("Overview of crew") {
+@main("Overview of persons") {
 
 <h1>Crew</h1>
 
 <ul>
     @for(person <- persons) {
-        <form action="crew/@person.id" method="POST" style="display: inline-block">
+        <form action="persons/@person.id" method="POST" style="display: inline-block">
             <input type="text" value="@person.name" name="name"/>
             <input type="text" value="@person.phone" name="phone"/>
             <input type="submit" value="update"/>
         </form>
-        <form action="crew/@person.id/delete" method="POST" style="display: inline-block">
+        <form action="persons/@person.id/delete" method="POST" style="display: inline-block">
             <input type="submit" value="delete"/>
         </form>
         <br/>
     }
     <li>
-        <form action="crew/add" method="POST">
+        <form action="persons/add" method="POST">
             <input type="text" placeholder="Name" name="name"/>
             <input type="text" placeholder="Phone" name="phone"/>
             <input type="submit" value="add"/>

@@ -2,7 +2,7 @@ package service
 
 
 import akka.actor.{Actor, Props}
-import dao.{AllocationDAO, CrewDAO, TaskDAO}
+import dao.{AllocationDAO, PersonDAO, TaskDAO}
 import model._
 import play.api.Logger
 import play.api.libs.concurrent.Execution.Implicits._
@@ -19,7 +19,7 @@ class TaskAllocatorImpl(implicit inj: Injector) extends TaskAllocator {
   val logger = Logger("TaskAllocator")
   val notifier = inject[Notifier]
 
-  val crewDAO: CrewDAO = inject[CrewDAO]
+  val crewDAO: PersonDAO = inject[PersonDAO]
   val taskDAO: TaskDAO = inject[TaskDAO]
   val allocationDAO = inject[AllocationDAO]
 
@@ -32,11 +32,14 @@ class TaskAllocatorImpl(implicit inj: Injector) extends TaskAllocator {
   Akka.system.scheduler.scheduleOnce(10 seconds, notifyActor, "please send the messages")
 
   override def publishTodaysAllocations: Unit = {
-    val allocations: List[Allocation] = allocationDAO.getAllocations
+    val allocations: List[Allocation] = allocationDAO.allocations
     allocations.foreach(a => {
-      val person = crewDAO.get(a.personID)
-      val task = taskDAO.get(a.taskID)
-      notifier.notify(person, s"Please do ${task.name}")
+      for {
+        person <- crewDAO.get(a.personID)
+        task <- taskDAO.get(a.taskID)
+      } yield {
+        notifier.notify(person, s"Please do ${task.name}")
+      }
     })
   }
 }

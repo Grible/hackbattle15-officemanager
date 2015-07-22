@@ -1,6 +1,6 @@
 package controllers
 
-import dao.CrewDAO
+import dao.PersonDAO
 import model.Person
 import play.api.mvc._
 import scaldi.Injectable._
@@ -9,8 +9,8 @@ import scaldi.Injector
 /**
  * Created by steven on 23/04/15.
  */
-class CrewController(implicit inj: Injector) extends Controller {
-  var crewDAO = inject[CrewDAO]
+class PersonController(implicit inj: Injector) extends Controller {
+  var crewDAO = inject[PersonDAO]
 //  val showCrewRoute = routes.CrewController.showCrew()
 
 //  def addPerson = Action { request =>
@@ -21,7 +21,7 @@ class CrewController(implicit inj: Injector) extends Controller {
 //  }
 //
 //  def showCrew = Action {
-//    Ok(views.html.crew(crewDAO.persons))
+//    Ok(views.html.persons(crewDAO.persons))
 //  }
 //
 //  def updatePerson(id: Int) = Action { request =>

@@ -1,6 +1,6 @@
-@(allocations: Set[model.Allocation])
+@(tasks: Seq[TaskWithMeta])
 
-@main("Overview of tasks") {
+@main("Overview of taskoverview") {
 
 <div class="banner" style="background-image: url('/assets/images/banner.png')">
     <a href="/" class="logo">Naggy</a>
@@ -13,12 +13,12 @@
 <div class="container">
 
     @*<ul class="task-list">*@
-        @*@for(allocation <- allocations) {*@
+        @*@for(alloc <- allocations) {*@
             @*@defining(allocation.task) { task =>*@
 
             @*<li class="task">*@
                     @*<header>*@
-                        @*<form data-task-id="@task.id" action="tasks/@task.id" method="POST" style="display: inline-block">*@
+                        @*<form data-task-id="@task.id" action="taskoverview/@task.id" method="POST" style="display: inline-block">*@
                             @*<input class="title" type="text" value="@task.name" name="name" data-task-id="@task.id" placeholder="Describe your task"/>*@
                         @*</form>*@
                         @*<ul class="days-indicator">*@
@@ -31,7 +31,7 @@
                         @*<span>next up on Thursday</span>*@
                         @*<img src="@allocation.person.avatarSrc" class="user-avatar">*@
                         @*<a href="#" class="change-btn" data-task-id="@task.id"></a>*@
-                        @*<form action="tasks/@task.id/delete" method="POST">*@
+                        @*<form action="taskoverview/@task.id/delete" method="POST">*@
                             @*<a href="#" class="delete-task-btn entypo-trash"></a>*@
                         @*</form>*@
                         @*<form action="allocations/@task.id/notify" method="POST">*@
@@ -43,7 +43,7 @@
         @*}*@
     @*</ul>*@
 
-    <form action="/tasks/add" method="POST" class="create hide">
+    <form action="/taskoverview/add" method="POST" class="create hide">
         <div class="input-box">
             <h3>Define your task</h3>
             <input class="description" type="text" name="description" placeholder="Describe your task">

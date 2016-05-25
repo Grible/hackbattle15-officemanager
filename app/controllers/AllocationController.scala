@@ -19,28 +19,64 @@ class AllocationController(implicit inj: Injector) extends Controller {
   //  val listTasksRoute = routes.AllocationController.listAllocations()
 
   def listAllocations = Action {
-
-    val allocationsWithMeta: Seq[TaskWithMeta] = allocationDAO.allocations
+    val maybeAllocations: Iterable[Option[Allocation]] = allocationDAO.allocations
       .sortWith((left: Allocation, right: Allocation) => left.executionDate.isBefore(right.executionDate))
       .filterNot(_.executionDate.isBefore(LocalDate.now()))
       .groupBy(_.taskID)
-      .mapValues(_.head)
-      .map(_._2)
-      .map((alloc: Allocation) => {
-          for {
-            task <- taskDAO.get(alloc.taskID)
-            person <- personDAO.get(alloc.personID)
-          } yield {
-            TaskWithMeta(task, alloc, person)
+      .filter(_._2.nonEmpty)
+      .values
+      .map(_.headOption)
+
+    val taskWithMetas = maybeAllocations flatMap {
+      case Some(a) => {
+        val maybeRes = for {
+          task <- taskDAO.get(a.taskID)
+          person <- personDAO.get(a.personID)
+        } yield {
+            TaskWithMeta(task, a, person)
           }
-        })
-      .filter(_.isDefined)
-      .map(_.get)
-      .toSeq
+        maybeRes.fold(Seq.empty[TaskWithMeta])(Seq(_))
+      }
+      case None => Seq.empty[TaskWithMeta]
+    } toSeq
 
-    println(allocationsWithMeta)
 
-    Ok(views.html.taskoverview(allocationsWithMeta))
+
+    //    taskWithMetas.map {
+    //      case Some(a) => {
+    //        for {
+    //          task <- taskDAO.get(a.taskID)
+    //          person <- personDAO.get(a.personID)
+    //        } yield {
+    //          TaskWithMeta(task, a, person)
+    //        }
+    //      }
+    //      case None => None
+    //    }
+    //
+    //    val res = taskWithMetas.map(_.flatMap { a =>
+    //      for {
+    //        task <- taskDAO.get(a.taskID)
+    //        person <- personDAO.get(a.personID)
+    //      } yield {
+    //        TaskWithMeta(task, a, person)
+    //      }
+    //    })
+    //    val allocationsWithMeta: Seq[TaskWithMeta] = taskWithMetas
+    //      .map(_._2)
+    //      .map((alloc: Allocation) => {
+    //          for {
+    //            task <- taskDAO.get(a.taskID)
+    //            person <- personDAO.get(a.personID)
+    //          } yield {
+    //            TaskWithMeta(task, alloc, person)
+    //          }
+    //        })
+    //      .filter(_.isDefined)
+    //      .map(_.get)
+    //      .toSeq
+
+    Ok(views.html.taskoverview(taskWithMetas))
   }
 
 }

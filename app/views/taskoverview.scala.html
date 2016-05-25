@@ -18,7 +18,7 @@
 
             <li class="task">
                     <header>
-                        <form data-task-id="@task.id" action="taskoverview/@task.id" method="POST" style="display: inline-block">
+                        <form data-task-id="@task.id" action="tasks/@task.id" method="PUT" style="display: inline-block">
                             <input class="title" type="text" value="@task.name" name="name" data-task-id="@task.id" placeholder="Describe your task"/>
                         </form>
                         <ul class="days-indicator">
@@ -28,14 +28,11 @@
                         </ul>
                     </header>
                     <aside>
-                        <span>next up on @taskMeta.upcomingAlloc.executionDate.toString</span>
+                        <span>next up on @taskMeta.upcomingAlloc.executionDate.toString: @taskMeta.upcomingAllocPerson.name</span>
                         <img src="@taskMeta.upcomingAllocPerson.avatarSrc" class="user-avatar">
-                        <a href="#" class="change-btn" data-task-id="@task.id"></a>
-                        <form action="taskoverview/@task.id/delete" method="POST">
-                            <a href="#" class="delete-task-btn entypo-trash"></a>
-                        </form>
-                        <form action="allocations/@task.id/notify" method="POST">
-                            <a href="#" class="remind-task-btn">notify</a>
+                        <a href="#" class="change-btn" data-task-id="@task.id">edit</a>
+                        <form action="tasks/@task.id" method="DELETE">
+                            <a href="#" class="delete-task-btn entypo-trash">del</a>
                         </form>
                     </aside>
             </li>
